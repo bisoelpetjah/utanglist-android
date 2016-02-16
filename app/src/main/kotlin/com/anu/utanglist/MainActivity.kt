@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar
  */
 class MainActivity: AppCompatActivity() {
 
-    var toolbar: Toolbar? = null
+    private var toolbar: Toolbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
