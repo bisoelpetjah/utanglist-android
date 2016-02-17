@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -21,6 +22,7 @@ import com.facebook.login.widget.LoginButton
 class LoginActivity: AppCompatActivity(), FacebookCallback<LoginResult> {
 
     var imageViewIcon: ImageView? = null
+    var textViewBrand: TextView? = null
     var buttonLogin: LoginButton? = null
 
     var isActive: Boolean = true
@@ -45,12 +47,14 @@ class LoginActivity: AppCompatActivity(), FacebookCallback<LoginResult> {
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         imageViewIcon = findViewById(R.id.icon) as ImageView
+        textViewBrand = findViewById(R.id.brand) as TextView
         buttonLogin = findViewById(R.id.loginButton) as LoginButton
 
         Handler().postDelayed({
             if (isActive) {
-                imageViewIcon?.animate()?.translationY((-50f * (Resources.getSystem().displayMetrics.densityDpi / 160f)))
-                buttonLogin?.animate()?.alpha(1f)
+                imageViewIcon?.animate()?.translationY((-80f * (Resources.getSystem().displayMetrics.densityDpi / 160f)))
+                textViewBrand?.animate()?.translationY((-90f * (Resources.getSystem().displayMetrics.densityDpi / 160f)))?.scaleX(0.7f)?.scaleY(0.7f)
+                buttonLogin?.animate()?.scaleX(1.2f)?.scaleY(1.2f)?.alpha(1f)
             }
         }, 1500)
 
