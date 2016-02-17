@@ -2,9 +2,8 @@ package com.anu.utanglist
 
 import com.anu.utanglist.models.Token
 import com.anu.utanglist.utils.WebServiceHelper
-import io.realm.Realm
-import io.realm.RealmConfiguration
-import io.realm.exceptions.RealmMigrationNeededException
+import com.orm.SugarContext
+import com.orm.SugarRecord
 
 /**
  * Created by irvan on 2/16/16.
@@ -15,16 +14,16 @@ class Application: android.app.Application() {
 
         WebServiceHelper.init()
 
-        try {
-            Realm.getInstance(this)
-        } catch(e: RealmMigrationNeededException) {
-            Realm.deleteRealm(RealmConfiguration.Builder(this).build())
-        }
+        SugarContext.init(this)
 
-        val token: Token? = Realm.getInstance(this)
-                .where(Token::class.java)
-                .findFirst()
+        val token: Token? = SugarRecord.last(Token::class.java)
 
         WebServiceHelper.accessToken = token?.accessToken
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+
+        SugarContext.terminate()
     }
 }
