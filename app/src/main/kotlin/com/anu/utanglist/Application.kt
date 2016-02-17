@@ -2,6 +2,7 @@ package com.anu.utanglist
 
 import com.anu.utanglist.models.Token
 import com.anu.utanglist.utils.WebServiceHelper
+import com.facebook.FacebookSdk
 import com.orm.SugarContext
 import com.orm.SugarRecord
 
@@ -16,8 +17,9 @@ class Application: android.app.Application() {
 
         SugarContext.init(this)
 
-        val token: Token? = SugarRecord.last(Token::class.java)
+        FacebookSdk.sdkInitialize(this)
 
+        val token: Token? = SugarRecord.last(Token::class.java)
         WebServiceHelper.accessToken = token?.accessToken
     }
 
