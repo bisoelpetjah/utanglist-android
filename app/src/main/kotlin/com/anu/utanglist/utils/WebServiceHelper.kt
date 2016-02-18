@@ -1,42 +1,54 @@
 package com.anu.utanglist.utils
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import retrofit.RequestInterceptor
-import retrofit.RestAdapter
-import retrofit.converter.GsonConverter
+import com.anu.utanglist.models.Token
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Response
+import retrofit2.Call
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 
 /**
  * Created by irvan on 2/16/16.
  */
-object WebServiceHelper: RequestInterceptor {
+object WebServiceHelper: Interceptor {
 
-    private final val API_ENDPOINT: String = "http://utanglist.mybluemix.net"
+    private final val BASE_URL: String = "http://192.168.0.33:1337"
+//    private final val BASE_URL: String = "http://utanglist.mybluemix.net"
     private final val API_DATE_FORMAT: String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 
-    var services: Services? = null
+    var service: Service? = null
         private set
 
     var accessToken: String? = null
 
     fun init() {
-        val gson: Gson = GsonBuilder()
-                .setDateFormat(API_DATE_FORMAT)
-                .excludeFieldsWithoutExposeAnnotation()
-                .create()
+        val converter = GsonConverterFactory.create()
 
-        val adapter: RestAdapter = RestAdapter.Builder()
-                .setEndpoint(API_ENDPOINT)
-                .setRequestInterceptor(this)
-                .setConverter(GsonConverter(gson))
+        val httpClient = OkHttpClient.Builder()
+                .addInterceptor(this)
                 .build()
 
-        services = adapter.create(Services::class.java)
+        val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(converter)
+                .client(httpClient)
+                .build()
+
+        service = retrofit.create(Service::class.java)
     }
 
-    override fun intercept(request: RequestInterceptor.RequestFacade?) {
-        request?.addHeader("Authorization", "Bearer " + accessToken)
+    override fun intercept(chain: Interceptor.Chain?): Response? {
+        return chain?.proceed(chain!!.request().newBuilder().header("Authorization", "Bearer " + accessToken).build())
     }
 
-    interface Services {}
+    interface Service {
+
+        @FormUrlEncoded
+        @POST("user/login")
+        fun login(@Field("access_token") facebookToken: String?): Call<Token>
+    }
 }

@@ -5,16 +5,20 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.anu.utanglist.models.Token
+import com.anu.utanglist.utils.WebServiceHelper
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 /**
  * Created by irvan on 2/17/16.
@@ -30,8 +34,22 @@ class LoginActivity: AppCompatActivity(), FacebookCallback<LoginResult> {
     val callbackManager: CallbackManager = CallbackManager.Factory.create()
 
     override fun onSuccess(loginResult: LoginResult?) {
-        Log.d("@@@", loginResult?.accessToken?.userId)
-        Log.d("@@@", loginResult?.accessToken?.token)
+        WebServiceHelper.service!!.login(loginResult?.accessToken?.token).enqueue(object: Callback<Token> {
+            override fun onResponse(call: Call<Token>?, response: Response<Token>?) {
+                if (response?.isSuccess!!) {
+                    WebServiceHelper.accessToken = response?.body()?.accessToken
+
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    finish()
+                } else {
+                    Toast.makeText(this@LoginActivity, R.string.error_login, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Token>?, t: Throwable?) {
+                Toast.makeText(this@LoginActivity, R.string.error_connection, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     override fun onCancel() {}

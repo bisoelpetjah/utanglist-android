@@ -2,5 +2,7 @@
     <string name="app_name">UtangList</string>
     <string name="facebook_app_id">581154828732362</string>
 
+    <string name="error_connection">Gagal menghubungi server. Silakan coba kembali sesaat lagi.</string>
+
     <string name="error_login">Login gagal. Silakan coba kembali sesaat lagi.</string>
 </resources>
