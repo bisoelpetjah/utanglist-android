@@ -5,8 +5,10 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import com.anu.utanglist.models.Token
@@ -14,8 +16,10 @@ import com.anu.utanglist.utils.WebServiceHelper
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
+import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.orm.SugarRecord
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,26 +32,42 @@ class LoginActivity: AppCompatActivity(), FacebookCallback<LoginResult> {
     var imageViewIcon: ImageView? = null
     var textViewBrand: TextView? = null
     var buttonLogin: LoginButton? = null
+    var progressBarLogin: ProgressBar? = null
 
     var isActive: Boolean = true
 
     val callbackManager: CallbackManager = CallbackManager.Factory.create()
 
     override fun onSuccess(loginResult: LoginResult?) {
+        buttonLogin?.visibility = View.GONE
+        progressBarLogin?.visibility = View.VISIBLE
+
         WebServiceHelper.service!!.login(loginResult?.accessToken?.token).enqueue(object: Callback<Token> {
             override fun onResponse(call: Call<Token>?, response: Response<Token>?) {
-                if (response?.isSuccess!!) {
-                    WebServiceHelper.accessToken = response?.body()?.accessToken
+                if (!response?.isSuccess!!) {
+                    Toast.makeText(this@LoginActivity, R.string.error_login, Toast.LENGTH_SHORT).show()
+
+                    buttonLogin?.visibility = View.VISIBLE
+                    progressBarLogin?.visibility = View.GONE
+                } else {
+                    val token = response?.body()
+                    SugarRecord.save(token)
+
+                    WebServiceHelper.accessToken = token?.accessToken
 
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()
-                } else {
-                    Toast.makeText(this@LoginActivity, R.string.error_login, Toast.LENGTH_SHORT).show()
                 }
+                LoginManager.getInstance().logOut()
             }
 
             override fun onFailure(call: Call<Token>?, t: Throwable?) {
                 Toast.makeText(this@LoginActivity, R.string.error_connection, Toast.LENGTH_SHORT).show()
+
+                buttonLogin?.visibility = View.VISIBLE
+                progressBarLogin?.visibility = View.GONE
+
+                LoginManager.getInstance().logOut()
             }
         })
     }

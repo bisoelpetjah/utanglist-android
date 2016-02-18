@@ -1,14 +1,17 @@
 package com.anu.utanglist.utils
 
 import com.anu.utanglist.models.Token
+import com.anu.utanglist.models.User
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 /**
@@ -28,8 +31,12 @@ object WebServiceHelper: Interceptor {
     fun init() {
         val converter = GsonConverterFactory.create()
 
+        val logger = HttpLoggingInterceptor()
+        logger.level = HttpLoggingInterceptor.Level.BODY
+
         val httpClient = OkHttpClient.Builder()
                 .addInterceptor(this)
+                .addInterceptor(logger)
                 .build()
 
         val retrofit = Retrofit.Builder()
@@ -42,7 +49,7 @@ object WebServiceHelper: Interceptor {
     }
 
     override fun intercept(chain: Interceptor.Chain?): Response? {
-        return chain?.proceed(chain!!.request().newBuilder().header("Authorization", "Bearer " + accessToken).build())
+        return chain?.proceed(chain!!.request().newBuilder().header("Authorization", accessToken).build())
     }
 
     interface Service {
@@ -50,5 +57,8 @@ object WebServiceHelper: Interceptor {
         @FormUrlEncoded
         @POST("user/login")
         fun login(@Field("access_token") facebookToken: String?): Call<Token>
+
+        @GET("user/me")
+        fun getCurrentUser(): Call<User>
     }
 }

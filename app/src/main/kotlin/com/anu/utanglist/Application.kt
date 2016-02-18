@@ -19,7 +19,7 @@ class Application: android.app.Application() {
 
         FacebookSdk.sdkInitialize(this)
 
-        val token: Token? = SugarRecord.last(Token::class.java)
+        val token: Token? = SugarRecord.first(Token::class.java)
         WebServiceHelper.accessToken = token?.accessToken
     }
 

@@ -26,4 +26,13 @@
         android:layout_alignBottom="@id/brand"
         android:alpha="0"/>
 
+    <ProgressBar
+        android:id="@+id/progressLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@id/brand"
+        android:indeterminate="true"
+        android:visibility="gone"/>
+
 </RelativeLayout>
