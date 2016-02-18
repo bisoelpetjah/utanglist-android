@@ -87,6 +87,7 @@ class LoginActivity: AppCompatActivity(), FacebookCallback<LoginResult> {
         imageViewIcon = findViewById(R.id.icon) as ImageView
         textViewBrand = findViewById(R.id.brand) as TextView
         buttonLogin = findViewById(R.id.loginButton) as LoginButton
+        progressBarLogin = findViewById(R.id.progressLogin) as ProgressBar
 
         Handler().postDelayed({
             if (isActive) {
