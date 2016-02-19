@@ -56,8 +56,8 @@ class MainActivity: AppCompatActivity() {
             drawerLayout?.setDrawerListener(drawerToggle)
             drawerToggle?.syncState()
 
-            val user: List<User>? = SugarRecord.find(User::class.java, "is_current_user = ?", "true")
-            if (user?.isNotEmpty()!!) setCurrentUser(user?.first())
+            val users: List<User>? = SugarRecord.find(User::class.java, "is_current_user = ?", "1")
+            if (users?.isNotEmpty()!!) setCurrentUser(users?.first())
 
             WebServiceHelper.service!!.getCurrentUser().enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>?, response: Response<User>?) {
