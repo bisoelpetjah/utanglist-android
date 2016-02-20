@@ -5,4 +5,8 @@
     <string name="error_connection">Gagal menghubungi server. Silakan coba kembali sesaat lagi.</string>
 
     <string name="error_login">Login gagal. Silakan coba kembali sesaat lagi.</string>
+
+    <string name="drawer_borrow">Utang</string>
+    <string name="drawer_lend">Piutang</string>
+    <string name="drawer_history">Riwayat</string>
 </resources>

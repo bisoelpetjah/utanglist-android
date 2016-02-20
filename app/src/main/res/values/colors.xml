@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="bg_toolbar">#009688</color>
-    <color name="bg_statusbar">#00897b</color>
+    <color name="bg_statusbar">#00796b</color>
+
+    <color name="bg_floating_action_button">#bf360c</color>
 </resources>

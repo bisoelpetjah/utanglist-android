@@ -4,15 +4,18 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.anu.utanglist.fragments.BorrowFragment
 import com.anu.utanglist.models.User
 import com.anu.utanglist.utils.WebServiceHelper
 import com.bumptech.glide.Glide
@@ -25,7 +28,7 @@ import retrofit2.Response
 /**
  * Created by irvan on 2/16/16.
  */
-class MainActivity: AppCompatActivity() {
+class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var toolbar: Toolbar? = null
     private var drawerLayout: DrawerLayout? = null
@@ -56,6 +59,12 @@ class MainActivity: AppCompatActivity() {
             drawerLayout?.setDrawerListener(drawerToggle)
             drawerToggle?.syncState()
 
+            navigationView?.setNavigationItemSelectedListener(this)
+
+            navigationView?.setCheckedItem(R.id.drawer_borrow)
+            supportActionBar?.setTitle(R.string.drawer_borrow)
+            assignFragment(BorrowFragment())
+
             val users: List<User>? = SugarRecord.find(User::class.java, "is_current_user = ?", "1")
             if (users?.isNotEmpty()!!) setCurrentUser(users?.first())
 
@@ -77,6 +86,29 @@ class MainActivity: AppCompatActivity() {
         }
     }
 
+    override fun onNavigationItemSelected(item: MenuItem?): Boolean {
+        drawerLayout?.closeDrawers()
+
+        when (item?.itemId) {
+            R.id.drawer_borrow -> {
+                supportActionBar?.setTitle(R.string.drawer_borrow)
+                assignFragment(BorrowFragment())
+                return true
+            }
+            R.id.drawer_lend -> {
+                supportActionBar?.setTitle(R.string.drawer_lend)
+                assignFragment(BorrowFragment())
+                return true
+            }
+            R.id.drawer_history -> {
+                supportActionBar?.setTitle(R.string.drawer_history)
+                assignFragment(BorrowFragment())
+                return true
+            }
+            else -> return false
+        }
+    }
+
     private fun setCurrentUser(currentUser: User?) {
         Glide.with(this@MainActivity)
                 .load(currentUser?.photoUrl)
@@ -90,5 +122,11 @@ class MainActivity: AppCompatActivity() {
                     }
                 })
         textViewName?.text = currentUser?.name
+    }
+
+    private fun assignFragment(fragment: Fragment?) {
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.content, fragment)
+                .commit()
     }
 }
