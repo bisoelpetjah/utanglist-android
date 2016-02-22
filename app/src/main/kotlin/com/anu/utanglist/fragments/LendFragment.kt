@@ -22,7 +22,7 @@ import retrofit2.Response
 /**
  * Created by irvan on 2/20/16.
  */
-class BorrowFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItemView.OnItemClickListener {
+class LendFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItemView.OnItemClickListener {
 
     private var recyclerViewUtang: SuperRecyclerView? = null
     private var emptyDebt: TextView? = null
@@ -43,15 +43,15 @@ class BorrowFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItem
     }
 
     override fun onRefresh() {
-        performGetMoneyBorrowedList()
+        performGetMoneyLentList()
     }
 
     override fun onItemClick(debt: Debt?) {}
 
-    private fun performGetMoneyBorrowedList() {
+    private fun performGetMoneyLentList() {
         recyclerViewUtang?.adapter = null
 
-        WebServiceHelper.service!!.getMoneyBorrowedList().enqueue(object: Callback<List<Debt>> {
+        WebServiceHelper.service!!.getMoneyLentList().enqueue(object: Callback<List<Debt>> {
             override fun onResponse(call: Call<List<Debt>>?, response: Response<List<Debt>>?) {
                 debtAdapter.debtList.clear()
                 debtAdapter.debtList.addAll(0, response?.body())

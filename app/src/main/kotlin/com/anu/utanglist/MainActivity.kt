@@ -17,6 +17,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.anu.utanglist.fragments.BorrowFragment
+import com.anu.utanglist.fragments.HistoryFragment
+import com.anu.utanglist.fragments.LendFragment
 import com.anu.utanglist.models.User
 import com.anu.utanglist.utils.WebServiceHelper
 import com.bumptech.glide.Glide
@@ -104,12 +106,12 @@ class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelected
             }
             R.id.drawer_lend -> {
                 supportActionBar?.setTitle(R.string.drawer_lend)
-                assignFragment(BorrowFragment())
+                assignFragment(LendFragment())
                 return true
             }
             R.id.drawer_history -> {
                 supportActionBar?.setTitle(R.string.drawer_history)
-                assignFragment(BorrowFragment())
+                assignFragment(HistoryFragment())
                 return true
             }
             else -> return false

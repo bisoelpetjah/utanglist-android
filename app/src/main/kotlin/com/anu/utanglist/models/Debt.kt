@@ -14,6 +14,9 @@ class Debt: SugarRecord() {
     @SerializedName("borrower_id")
     var borrowerId: String? = null
 
+    @SerializedName("user")
+    var user: User? = null
+
     @SerializedName("total_debt")
     var totalAmount: Long = 0
 

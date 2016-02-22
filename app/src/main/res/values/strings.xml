@@ -12,7 +12,11 @@
     <string name="drawer_borrow">Utang</string>
     <string name="drawer_lend">Piutang</string>
     <string name="drawer_history">Riwayat</string>
-    
+
+    <string name="label_name_borrow">dari</string>
+    <string name="label_name_lend">kepada</string>
+    <string name="empty_debt">Belum ada item.</string>
+
     <string-array name="debt_types">
         <item>Utang</item>
         <item>Piutang</item>
