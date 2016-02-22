@@ -1,15 +1,20 @@
 package com.anu.utanglist
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import com.anu.utanglist.adapters.AutocompleteAdapter
+import com.anu.utanglist.models.Debt
 import com.anu.utanglist.models.User
 import com.anu.utanglist.utils.WebServiceHelper
 import com.anu.utanglist.views.UserSuggestionView
@@ -29,6 +34,8 @@ class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener, 
     private var editTextName: EditText? = null
     private var selectedUserView: UserSuggestionView? = null
     private var buttonClear: ImageButton? = null
+    private var inputLayoutAmount: TextInputLayout? = null
+    private var editTextAmount: EditText? = null
     private var inputLayoutNote: TextInputLayout? = null
     private var editTextNote: EditText? = null
     private var recyclerViewAutocomplete: SuperRecyclerView? = null
@@ -36,6 +43,7 @@ class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener, 
 
     private val autocompleteAdapter: AutocompleteAdapter = AutocompleteAdapter()
 
+    private var selectedMode: Int = 0
     private var selectedUser: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +56,8 @@ class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener, 
         editTextName = findViewById(R.id.name) as EditText
         selectedUserView = findViewById(R.id.selectedUser) as UserSuggestionView
         buttonClear = findViewById(R.id.clear) as ImageButton
+        inputLayoutAmount = findViewById(R.id.amountLayout) as TextInputLayout
+        editTextAmount = findViewById(R.id.amount) as EditText
         inputLayoutNote = findViewById(R.id.noteLayout) as TextInputLayout
         editTextNote = findViewById(R.id.note) as EditText
         recyclerViewAutocomplete = findViewById(R.id.autocomplete) as SuperRecyclerView
@@ -65,6 +75,7 @@ class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener, 
         spinnerType?.onItemSelectedListener = this
 
         inputLayoutName?.setHint(resources.getString(R.string.hint_lender))
+        inputLayoutAmount?.setHint(resources.getString(R.string.hint_amount))
         inputLayoutNote?.setHint(resources.getString(R.string.hint_note))
 
         editTextName?.onFocusChangeListener = this
@@ -85,14 +96,34 @@ class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener, 
         recyclerViewAutocomplete?.recyclerView?.layoutManager = LinearLayoutManager(this)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.add_debt, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.submit) {
+            if (selectedUser == null || editTextAmount?.length() == 0 || editTextNote?.length() == 0) {
+                AlertDialog.Builder(this)
+                        .setMessage(R.string.error_submit)
+                        .setNegativeButton(R.string.dialog_ok, null)
+                        .show()
+            } else {
+                when (selectedMode) {
+                    0 -> performAddMoneyBorrowed(selectedUser!!.facebookId!!, editTextAmount?.text.toString().toLong(), editTextNote?.text.toString())
+                    1 -> performAddMoneyLent(selectedUser!!.facebookId!!, editTextAmount?.text.toString().toLong(), editTextNote?.text.toString())
+                }
+            }
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+        selectedMode = pos
         when (pos) {
-            0 -> {
-                inputLayoutName?.setHint(resources.getString(R.string.hint_lender))
-            }
-            1 -> {
-                inputLayoutName?.setHint(resources.getString(R.string.hint_borrower))
-            }
+            0 -> inputLayoutName?.setHint(resources.getString(R.string.hint_lender))
+            1 -> inputLayoutName?.setHint(resources.getString(R.string.hint_borrower))
         }
     }
 
@@ -145,6 +176,36 @@ class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener, 
             }
 
             override fun onFailure(call: Call<List<User>>?, t: Throwable?) {
+                Toast.makeText(this@AddDebtActivity, R.string.error_connection, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun performAddMoneyLent(borrowerId: String, amount: Long, note: String) {
+        var progress = ProgressDialog.show(this, null, resources.getString(R.string.dialog_loading))
+
+        WebServiceHelper.service!!.addMoneyLent(borrowerId, amount, note).enqueue(object: Callback<Debt> {
+            override fun onResponse(call: Call<Debt>?, response: Response<Debt>?) {
+                progress.cancel()
+                finish()
+            }
+
+            override fun onFailure(call: Call<Debt>?, t: Throwable?) {
+                Toast.makeText(this@AddDebtActivity, R.string.error_connection, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun performAddMoneyBorrowed(lenderId: String, amount: Long, note: String) {
+        var progress = ProgressDialog.show(this, null, resources.getString(R.string.dialog_loading))
+
+        WebServiceHelper.service!!.addMoneyBorrowed(lenderId, amount, note).enqueue(object: Callback<Debt> {
+            override fun onResponse(call: Call<Debt>?, response: Response<Debt>?) {
+                progress.cancel()
+                finish()
+            }
+
+            override fun onFailure(call: Call<Debt>?, t: Throwable?) {
                 Toast.makeText(this@AddDebtActivity, R.string.error_connection, Toast.LENGTH_SHORT).show()
             }
         })

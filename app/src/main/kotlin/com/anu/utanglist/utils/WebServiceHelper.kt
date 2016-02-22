@@ -63,10 +63,10 @@ object WebServiceHelper: Interceptor {
 
         @FormUrlEncoded
         @POST("debt/add")
-        fun addMoneyLent(@Field("borrower_id") borrowerId: String, @Field("amount") amount: Long, @Field("notes") notes: String): Call<Debt>
+        fun addMoneyLent(@Field("borrower_id") borrowerId: String, @Field("amount") amount: Long, @Field("notes") note: String): Call<Debt>
 
         @FormUrlEncoded
         @POST("debt/add")
-        fun addMoneyBorrowed(@Field("lender_id") lenderId: String, @Field("amount") amount: Long, @Field("notes") notes: String): Call<Debt>
+        fun addMoneyBorrowed(@Field("lender_id") lenderId: String, @Field("amount") amount: Long, @Field("notes") note: String): Call<Debt>
     }
 }
