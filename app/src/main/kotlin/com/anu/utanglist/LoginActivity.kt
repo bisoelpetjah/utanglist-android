@@ -42,7 +42,7 @@ class LoginActivity: AppCompatActivity(), FacebookCallback<LoginResult> {
         buttonLogin?.visibility = View.GONE
         progressBarLogin?.visibility = View.VISIBLE
 
-        WebServiceHelper.service!!.login(loginResult?.accessToken?.token).enqueue(object: Callback<Token> {
+        WebServiceHelper.service!!.login(loginResult?.accessToken?.token!!).enqueue(object: Callback<Token> {
             override fun onResponse(call: Call<Token>?, response: Response<Token>?) {
                 if (!response?.isSuccess!!) {
                     Toast.makeText(this@LoginActivity, R.string.error_login, Toast.LENGTH_SHORT).show()

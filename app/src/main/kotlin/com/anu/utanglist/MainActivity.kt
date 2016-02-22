@@ -3,6 +3,7 @@ package com.anu.utanglist
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable
@@ -35,6 +36,7 @@ class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelected
     private var navigationView: NavigationView? = null
     private var imageViewPhoto: ImageView? = null
     private var textViewName: TextView? = null
+    private var buttonAdd: FloatingActionButton? = null
 
     private var drawerToggle: ActionBarDrawerToggle? = null
 
@@ -51,6 +53,7 @@ class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelected
             navigationView = findViewById(R.id.navigationView) as NavigationView
             imageViewPhoto = navigationView?.getHeaderView(0)?.findViewById(R.id.photo) as ImageView
             textViewName = navigationView?.getHeaderView(0)?.findViewById(R.id.name) as TextView
+            buttonAdd = findViewById(R.id.add) as FloatingActionButton
 
             setSupportActionBar(toolbar)
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -83,6 +86,10 @@ class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelected
                     Toast.makeText(this@MainActivity, R.string.error_connection, Toast.LENGTH_SHORT).show()
                 }
             })
+
+            buttonAdd?.setOnClickListener {
+                startActivity(Intent(this, AddDebtActivity::class.java))
+            }
         }
     }
 
@@ -113,6 +120,7 @@ class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelected
         Glide.with(this@MainActivity)
                 .load(currentUser?.photoUrl)
                 .asBitmap()
+                .placeholder(R.drawable.ic_profile_placeholder)
                 .centerCrop()
                 .into(object: BitmapImageViewTarget(imageViewPhoto) {
                     override fun setResource(resource: Bitmap?) {

@@ -9,4 +9,13 @@
     <string name="drawer_borrow">Utang</string>
     <string name="drawer_lend">Piutang</string>
     <string name="drawer_history">Riwayat</string>
+    
+    <string-array name="debt_types">
+        <item>Utang</item>
+        <item>Piutang</item>
+    </string-array>
+    <string name="hint_lender">Pemberi utang</string>
+    <string name="hint_borrower">Pengutang</string>
+    <string name="hint_note">Catatan</string>
+    <string name="empty_autocomplete">User tidak ditemukan.</string>
 </resources>

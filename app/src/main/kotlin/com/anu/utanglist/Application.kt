@@ -10,6 +10,7 @@ import com.orm.SugarRecord
  * Created by irvan on 2/16/16.
  */
 class Application: android.app.Application() {
+
     override fun onCreate() {
         super.onCreate()
 

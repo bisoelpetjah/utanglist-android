@@ -22,12 +22,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".LoginActivity"/>
+
+        <activity android:name=".AddDebtActivity" android:windowSoftInputMode="stateHidden|adjustResize"/>
 
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@string/app_name"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name"/>
 
     </application>
 
