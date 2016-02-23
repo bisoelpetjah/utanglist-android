@@ -35,30 +35,31 @@ class BorrowFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItem
         recyclerViewUtang = view?.findViewById(R.id.debt) as SuperRecyclerView
         emptyDebt = view?.findViewById(R.id.emptyDebt) as TextView
 
-        recyclerViewUtang?.recyclerView?.layoutManager = LinearLayoutManager(context)
-        recyclerViewUtang?.swipeToRefresh?.setOnRefreshListener(this)
+        recyclerViewUtang?.adapter = debtAdapter
+        recyclerViewUtang?.setLayoutManager(LinearLayoutManager(context))
+        recyclerViewUtang?.setRefreshListener(this)
 
-        onRefresh()
+        performGetMoneyBorrowedList()
 
         return view
     }
 
     override fun onRefresh() {
+        recyclerViewUtang?.setRefreshing(true)
+
         performGetMoneyBorrowedList()
     }
 
     override fun onItemClick(debt: Debt?) {}
 
     private fun performGetMoneyBorrowedList() {
-        recyclerViewUtang?.adapter = null
-
         WebServiceHelper.service!!.getMoneyBorrowedList().enqueue(object: Callback<List<Debt>> {
             override fun onResponse(call: Call<List<Debt>>?, response: Response<List<Debt>>?) {
                 debtAdapter.debtList.clear()
                 debtAdapter.debtList.addAll(0, response?.body())
                 debtAdapter.notifyDataSetChanged()
 
-                recyclerViewUtang?.adapter = debtAdapter
+                recyclerViewUtang?.setRefreshing(false)
 
                 if (debtAdapter.itemCount == 0) {
                     emptyDebt?.visibility = View.VISIBLE

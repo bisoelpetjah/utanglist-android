@@ -38,27 +38,27 @@ class LendFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItemVi
         recyclerViewUtang?.recyclerView?.layoutManager = LinearLayoutManager(context)
         recyclerViewUtang?.swipeToRefresh?.setOnRefreshListener(this)
 
-        onRefresh()
+        performGetMoneyLentList()
 
         return view
     }
 
     override fun onRefresh() {
+        recyclerViewUtang?.setRefreshing(true)
+
         performGetMoneyLentList()
     }
 
     override fun onItemClick(debt: Debt?) {}
 
     private fun performGetMoneyLentList() {
-        recyclerViewUtang?.adapter = null
-
         WebServiceHelper.service!!.getMoneyLentList().enqueue(object: Callback<List<Debt>> {
             override fun onResponse(call: Call<List<Debt>>?, response: Response<List<Debt>>?) {
                 debtAdapter.debtList.clear()
                 debtAdapter.debtList.addAll(0, response?.body())
                 debtAdapter.notifyDataSetChanged()
 
-                recyclerViewUtang?.adapter = debtAdapter
+                recyclerViewUtang?.setRefreshing(false)
 
                 if (debtAdapter.itemCount == 0) {
                     emptyDebt?.visibility = View.VISIBLE

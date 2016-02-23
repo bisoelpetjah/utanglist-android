@@ -93,7 +93,7 @@ class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener, 
 
         autocompleteAdapter.onItemClickListener = this
         recyclerViewAutocomplete?.adapter = autocompleteAdapter
-        recyclerViewAutocomplete?.recyclerView?.layoutManager = LinearLayoutManager(this)
+        recyclerViewAutocomplete?.setLayoutManager(LinearLayoutManager(this))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
