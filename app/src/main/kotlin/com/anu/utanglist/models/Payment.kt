@@ -7,26 +7,22 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
- * Created by irvan on 2/19/16.
+ * Created by irvan on 2/23/16.
  */
-@Table(name = "Users", id = "_id")
-class User: Model() {
+@Table(name = "Payments", id = "_id")
+class Payment: Model() {
 
     @Expose
     @Column(unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
-    @SerializedName("user_id")
-    var facebookId: String? = null
+    var id: String? = null
 
     @Expose
     @Column
-    @SerializedName("full_name")
-    var name: String? = null
+    @SerializedName("amount")
+    var amount: Long = 0
 
     @Expose
     @Column
-    @SerializedName("avatar")
-    var photoUrl: String? = null
-
-    @Column
-    var isCurrentUser: Boolean = false
+    @SerializedName("status")
+    var status: String? = null
 }

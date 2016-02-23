@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import com.activeandroid.ActiveAndroid
+import com.activeandroid.query.Select
 import com.anu.utanglist.R
 import com.anu.utanglist.adapters.DebtAdapter
 import com.anu.utanglist.models.Debt
@@ -39,9 +41,13 @@ class BorrowFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItem
         recyclerViewUtang?.setLayoutManager(LinearLayoutManager(context))
         recyclerViewUtang?.setRefreshListener(this)
 
-        performGetMoneyBorrowedList()
-
         return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        performGetMoneyBorrowedList()
     }
 
     override fun onRefresh() {
@@ -55,6 +61,17 @@ class BorrowFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItem
     private fun performGetMoneyBorrowedList() {
         WebServiceHelper.service!!.getMoneyBorrowedList().enqueue(object: Callback<List<Debt>> {
             override fun onResponse(call: Call<List<Debt>>?, response: Response<List<Debt>>?) {
+                ActiveAndroid.beginTransaction()
+                try {
+                    response?.body()?.forEach {
+                        it.type = Debt.Type.BORROW
+                        it.save()
+                    }
+                    ActiveAndroid.setTransactionSuccessful()
+                } finally {
+                    ActiveAndroid.endTransaction()
+                }
+
                 debtAdapter.debtList.clear()
                 debtAdapter.debtList.addAll(0, response?.body())
                 debtAdapter.notifyDataSetChanged()
@@ -69,6 +86,14 @@ class BorrowFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItem
             }
 
             override fun onFailure(call: Call<List<Debt>>?, t: Throwable?) {
+                val debts = Select().from(Debt::class.java).where("type = ?", Debt.Type.BORROW).execute<Debt>()
+
+                debtAdapter.debtList.clear()
+                debtAdapter.debtList.addAll(0, debts)
+                debtAdapter.notifyDataSetChanged()
+
+                recyclerViewUtang?.setRefreshing(false)
+
                 Toast.makeText(activity, R.string.error_connection, Toast.LENGTH_SHORT).show()
             }
         })

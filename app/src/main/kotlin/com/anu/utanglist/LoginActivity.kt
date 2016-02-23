@@ -19,7 +19,6 @@ import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
-import com.orm.SugarRecord
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,7 +50,7 @@ class LoginActivity: AppCompatActivity(), FacebookCallback<LoginResult> {
                     progressBarLogin?.visibility = View.GONE
                 } else {
                     val token = response?.body()
-                    SugarRecord.save(token)
+                    token?.save()
 
                     WebServiceHelper.accessToken = token?.accessToken
 

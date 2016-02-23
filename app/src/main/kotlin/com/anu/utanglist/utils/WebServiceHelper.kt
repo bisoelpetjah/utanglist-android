@@ -3,6 +3,8 @@ package com.anu.utanglist.utils
 import com.anu.utanglist.models.Debt
 import com.anu.utanglist.models.Token
 import com.anu.utanglist.models.User
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -17,7 +19,8 @@ import retrofit2.http.*
  */
 object WebServiceHelper: Interceptor {
 
-    private final val BASE_URL: String = "http://utanglist.mybluemix.net"
+    private final val BASE_URL: String = "http://192.168.0.33:1337"
+//    private final val BASE_URL: String = "http://utanglist.mybluemix.net"
     private final val API_DATE_FORMAT: String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 
     var service: Service? = null
@@ -26,7 +29,11 @@ object WebServiceHelper: Interceptor {
     var accessToken: String? = null
 
     fun init() {
-        val converter = GsonConverterFactory.create()
+        val gson: Gson = GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create()
+
+        val converter = GsonConverterFactory.create(gson)
 
         val logger = HttpLoggingInterceptor()
         logger.level = HttpLoggingInterceptor.Level.BODY

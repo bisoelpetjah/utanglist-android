@@ -16,6 +16,7 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.activeandroid.query.Select
 import com.anu.utanglist.fragments.BorrowFragment
 import com.anu.utanglist.fragments.HistoryFragment
 import com.anu.utanglist.fragments.LendFragment
@@ -23,7 +24,6 @@ import com.anu.utanglist.models.User
 import com.anu.utanglist.utils.WebServiceHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.BitmapImageViewTarget
-import com.orm.SugarRecord
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -70,15 +70,15 @@ class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelected
             supportActionBar?.setTitle(R.string.drawer_borrow)
             assignFragment(BorrowFragment())
 
-            val users: List<User>? = SugarRecord.find(User::class.java, "is_current_user = ?", "1")
-            if (users?.isNotEmpty()!!) setCurrentUser(users?.first())
+            val user: User? = Select().from(User::class.java).where("isCurrentUser = ?", true).executeSingle()
+            setCurrentUser(user)
 
             WebServiceHelper.service!!.getCurrentUser().enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>?, response: Response<User>?) {
                     if (response?.isSuccess!!) {
                         val currentUser = response?.body()
                         currentUser?.isCurrentUser = true
-                        SugarRecord.save(currentUser)
+                        currentUser?.save()
 
                         setCurrentUser(currentUser)
                     }

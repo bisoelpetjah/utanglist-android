@@ -191,6 +191,7 @@ class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener, 
             }
 
             override fun onFailure(call: Call<Debt>?, t: Throwable?) {
+                progress.cancel()
                 Toast.makeText(this@AddDebtActivity, R.string.error_connection, Toast.LENGTH_SHORT).show()
             }
         })
@@ -206,6 +207,7 @@ class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener, 
             }
 
             override fun onFailure(call: Call<Debt>?, t: Throwable?) {
+                progress.cancel()
                 Toast.makeText(this@AddDebtActivity, R.string.error_connection, Toast.LENGTH_SHORT).show()
             }
         })

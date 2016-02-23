@@ -42,7 +42,7 @@ class DebtItemView : RelativeLayout {
                             imageViewPhoto?.setImageDrawable(bitmapDrawable)
                         }
                     })
-            if (value?.lenderId != null) {
+            if (value?.type == Debt.Type.BORROW) {
                 textViewLabelName?.text = resources.getString(R.string.label_name_borrow)
             } else {
                 textViewLabelName?.text = resources.getString(R.string.label_name_lend)
