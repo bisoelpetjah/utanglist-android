@@ -64,7 +64,7 @@ class DebtItemView : RelativeLayout {
     }
 
     private fun init(context: Context) {
-        LayoutInflater.from(context).inflate(R.layout.layout_user_suggestion, this, true)
+        LayoutInflater.from(context).inflate(R.layout.layout_debt_item, this, true)
 
         imageViewPhoto = findViewById(R.id.photo) as ImageView
         textViewAmount = findViewById(R.id.amount) as TextView

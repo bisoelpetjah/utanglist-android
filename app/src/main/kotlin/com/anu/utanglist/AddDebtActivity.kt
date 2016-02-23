@@ -92,6 +92,7 @@ class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener, 
         }
 
         autocompleteAdapter.onItemClickListener = this
+        recyclerViewAutocomplete?.adapter = autocompleteAdapter
         recyclerViewAutocomplete?.recyclerView?.layoutManager = LinearLayoutManager(this)
     }
 
@@ -161,15 +162,11 @@ class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener, 
     }
 
     private fun performGetUserSuggestions(name: String) {
-        recyclerViewAutocomplete?.adapter = null
-
         WebServiceHelper.service!!.getUserSuggestion(name).enqueue(object: Callback<List<User>> {
             override fun onResponse(call: Call<List<User>>?, response: Response<List<User>>?) {
                 autocompleteAdapter.userSuggestionList.clear()
                 autocompleteAdapter.userSuggestionList.addAll(0, response?.body())
                 autocompleteAdapter.notifyDataSetChanged()
-
-                recyclerViewAutocomplete?.adapter = autocompleteAdapter
 
                 if (autocompleteAdapter.itemCount == 0) {
                     emptyAutocomplete?.visibility = View.VISIBLE

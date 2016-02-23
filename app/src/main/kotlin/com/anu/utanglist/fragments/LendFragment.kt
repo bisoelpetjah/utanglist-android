@@ -36,6 +36,7 @@ class LendFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItemVi
         emptyDebt = view?.findViewById(R.id.emptyDebt) as TextView
 
         recyclerViewUtang?.recyclerView?.layoutManager = LinearLayoutManager(context)
+        recyclerViewUtang?.swipeToRefresh?.setOnRefreshListener(this)
 
         onRefresh()
 
