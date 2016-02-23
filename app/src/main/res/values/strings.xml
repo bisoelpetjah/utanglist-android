@@ -17,6 +17,9 @@
     <string name="label_name_lend">kepada</string>
     <string name="empty_debt">Belum ada item.</string>
 
+    <string name="title_debt_detail">Detail Utang</string>
+
+    <string name="title_add_debt">Tambah Utang</string>
     <string-array name="debt_types">
         <item>Utang</item>
         <item>Piutang</item>

@@ -64,6 +64,7 @@ class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener, 
         emptyAutocomplete = findViewById(R.id.emptyAutocomplete) as TextView
 
         setSupportActionBar(toolbar)
+        supportActionBar?.setTitle(R.string.title_add_debt)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar?.setNavigationOnClickListener {
             finish()

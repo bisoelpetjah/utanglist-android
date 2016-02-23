@@ -1,5 +1,6 @@
 package com.anu.utanglist.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -11,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.activeandroid.ActiveAndroid
 import com.activeandroid.query.Select
+import com.anu.utanglist.DebtDetailActivity
 import com.anu.utanglist.R
 import com.anu.utanglist.adapters.DebtAdapter
 import com.anu.utanglist.models.Debt
@@ -37,6 +39,7 @@ class LendFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItemVi
         recyclerViewUtang = view?.findViewById(R.id.debt) as SuperRecyclerView
         emptyDebt = view?.findViewById(R.id.emptyDebt) as TextView
 
+        debtAdapter.onItemClickListener = this
         recyclerViewUtang?.adapter = debtAdapter
         recyclerViewUtang?.setLayoutManager(LinearLayoutManager(context))
         recyclerViewUtang?.setRefreshListener(this)
@@ -56,46 +59,52 @@ class LendFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItemVi
         performGetMoneyLentList()
     }
 
-    override fun onItemClick(debt: Debt?) {}
+    override fun onItemClick(debt: Debt?) {
+        val intent = Intent(context, DebtDetailActivity::class.java)
+        intent.putExtra(DebtDetailActivity.EXTRA_DEBT_ID, debt?.id)
+        startActivity(intent)
+    }
 
     private fun performGetMoneyLentList() {
         WebServiceHelper.service!!.getMoneyLentList().enqueue(object: Callback<List<Debt>> {
             override fun onResponse(call: Call<List<Debt>>?, response: Response<List<Debt>>?) {
+                recyclerViewUtang?.setRefreshing(false)
+
+                showData(response?.body())
+
                 ActiveAndroid.beginTransaction()
                 try {
                     response?.body()?.forEach {
                         it.type = Debt.Type.LEND
+                        it.user?.save()
                         it.save()
                     }
                     ActiveAndroid.setTransactionSuccessful()
                 } finally {
                     ActiveAndroid.endTransaction()
                 }
-
-                debtAdapter.debtList.clear()
-                debtAdapter.debtList.addAll(0, response?.body())
-                debtAdapter.notifyDataSetChanged()
-
-                recyclerViewUtang?.setRefreshing(false)
-
-                if (debtAdapter.itemCount == 0) {
-                    emptyDebt?.visibility = View.VISIBLE
-                } else {
-                    emptyDebt?.visibility = View.GONE
-                }
             }
 
             override fun onFailure(call: Call<List<Debt>>?, t: Throwable?) {
-                val debts = Select().from(Debt::class.java).where("type = ?", Debt.Type.LEND).execute<Debt>()
-
-                debtAdapter.debtList.clear()
-                debtAdapter.debtList.addAll(0, debts)
-                debtAdapter.notifyDataSetChanged()
-
                 recyclerViewUtang?.setRefreshing(false)
+
+                val debtList = Select().from(Debt::class.java).where("type = ?", Debt.Type.LEND).execute<Debt>()
+                showData(debtList)
 
                 Toast.makeText(activity, R.string.error_connection, Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun showData(debtList: List<Debt>?) {
+        debtAdapter.debtList.clear()
+        debtAdapter.debtList.addAll(0, debtList)
+        debtAdapter.notifyDataSetChanged()
+
+        if (debtAdapter.itemCount == 0) {
+            emptyDebt?.visibility = View.VISIBLE
+        } else {
+            emptyDebt?.visibility = View.GONE
+        }
     }
 }

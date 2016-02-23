@@ -5,6 +5,7 @@ import com.activeandroid.annotation.Column
 import com.activeandroid.annotation.Table
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 /**
  * Created by irvan on 2/23/16.
@@ -25,4 +26,9 @@ class Payment: Model() {
     @Column
     @SerializedName("status")
     var status: String? = null
+
+    @Expose
+    @Column
+    @SerializedName("updated_at")
+    var date: Date? = null
 }

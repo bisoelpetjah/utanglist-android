@@ -1,6 +1,7 @@
 package com.anu.utanglist.utils
 
 import com.anu.utanglist.models.Debt
+import com.anu.utanglist.models.Payment
 import com.anu.utanglist.models.Token
 import com.anu.utanglist.models.User
 import com.google.gson.Gson
@@ -19,9 +20,9 @@ import retrofit2.http.*
  */
 object WebServiceHelper: Interceptor {
 
-    private final val BASE_URL: String = "http://192.168.0.33:1337"
-//    private final val BASE_URL: String = "http://utanglist.mybluemix.net"
-    private final val API_DATE_FORMAT: String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    private final val BASE_URL = "http://192.168.0.33:1337"
+//    private final val BASE_URL = "http://utanglist.mybluemix.net"
+    private final val DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 
     var service: Service? = null
         private set
@@ -30,6 +31,7 @@ object WebServiceHelper: Interceptor {
 
     fun init() {
         val gson: Gson = GsonBuilder()
+                .setDateFormat(DATE_FORMAT)
                 .excludeFieldsWithoutExposeAnnotation()
                 .create()
 
@@ -81,5 +83,9 @@ object WebServiceHelper: Interceptor {
         @FormUrlEncoded
         @POST("debt/add")
         fun addMoneyLent(@Field("borrower_id") borrowerId: String, @Field("amount") amount: Long, @Field("notes") note: String): Call<Debt>
+
+        @FormUrlEncoded
+        @POST("payment")
+        fun addPayment(@Field("debt") debtId: String, @Field("amount") amount: Long): Call<Payment>
     }
 }
