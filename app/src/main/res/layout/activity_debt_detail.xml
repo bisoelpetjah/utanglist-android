@@ -16,6 +16,104 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/photo"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_profile_placeholder"/>
+
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/photo"
+                android:textSize="32sp"/>
+
+            <TextView
+                android:id="@+id/amountDivider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/amount"
+                android:layout_alignBaseline="@id/amount"
+                android:text="@string/divider_amount"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:id="@+id/totalAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/amountDivider"
+                android:layout_alignBaseline="@id/amount"
+                android:textSize="24sp"
+                android:textColor="@android:color/primary_text_light"
+                android:maxLines="1"/>
+
+            <TextView
+                android:id="@+id/labelName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/amount"
+                android:layout_toRightOf="@id/photo"/>
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelName"
+                android:layout_toRightOf="@id/photo"
+                android:textSize="20sp"
+                android:textColor="@android:color/primary_text_light"
+                android:maxLines="2"/>
+
+            <TextView
+                android:id="@+id/labelNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/photo"
+                android:text="@string/label_note"/>
+
+            <TextView
+                android:id="@+id/note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@id/labelNote"
+                android:textSize="20dp"
+                android:textColor="@android:color/primary_text_light"/>
+
+            <View
+                android:id="@+id/paymentDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/note"
+                android:background="@android:color/darker_gray"/>
+
+            <LinearLayout
+                android:id="@+id/payments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/paymentDivider"
+                android:orientation="vertical"/>
+
+            <TextView
+                android:id="@+id/emptyPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_below="@id/paymentDivider"
+                android:layout_centerHorizontal="true"
+                android:text="@string/empty_payment"
+                android:visibility="gone"/>
+
         </RelativeLayout>
     </ScrollView>
 

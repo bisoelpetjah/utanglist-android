@@ -14,10 +14,15 @@
     <string name="drawer_history">Riwayat</string>
 
     <string name="label_name_borrow">dari</string>
-    <string name="label_name_lend">kepada</string>
+    <string name="label_name_lend">untuk</string>
     <string name="empty_debt">Belum ada item.</string>
 
     <string name="title_debt_detail">Detail Utang</string>
+    <string name="divider_amount">/</string>
+    <string name="label_detail_borrow">Pinjaman dari</string>
+    <string name="label_detail_lend">Pinjaman untuk</string>
+    <string name="label_note">Catatan:</string>
+    <string name="empty_payment">Belum ada pembayaran.</string>
 
     <string name="title_add_debt">Tambah Utang</string>
     <string-array name="debt_types">

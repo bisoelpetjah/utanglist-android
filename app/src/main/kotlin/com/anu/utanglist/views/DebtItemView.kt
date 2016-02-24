@@ -2,6 +2,7 @@ package com.anu.utanglist.views
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory
 import android.util.AttributeSet
@@ -42,13 +43,15 @@ class DebtItemView : RelativeLayout {
                             imageViewPhoto?.setImageDrawable(bitmapDrawable)
                         }
                     })
+            textViewAmount?.text = value?.currentAmount.toString()
             if (value?.type == Debt.Type.BORROW) {
+                textViewAmount?.setTextColor(ContextCompat.getColor(context, R.color.bg_floating_action_button))
                 textViewLabelName?.text = resources.getString(R.string.label_name_borrow)
             } else {
+                textViewAmount?.setTextColor(ContextCompat.getColor(context, android.R.color.primary_text_light))
                 textViewLabelName?.text = resources.getString(R.string.label_name_lend)
             }
             textViewName?.text = value?.user?.name
-            textViewAmount?.text = value?.currentAmount.toString()
         }
 
     constructor(context: Context): super(context) {
