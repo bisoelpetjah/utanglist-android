@@ -19,9 +19,15 @@ object  PreferenceHelper {
             return PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_ACCESS_TOKEN, null)
         }
         set(value) {
-            PreferenceManager.getDefaultSharedPreferences(context).edit()
-                    .putString(PREF_ACCESS_TOKEN, value)
-                    .commit()
+            if (value == null) {
+                PreferenceManager.getDefaultSharedPreferences(context).edit()
+                        .remove(PREF_ACCESS_TOKEN)
+                        .commit()
+            } else {
+                PreferenceManager.getDefaultSharedPreferences(context).edit()
+                        .putString(PREF_ACCESS_TOKEN, value)
+                        .commit()
+            }
         }
 
     var ecashId: String?
@@ -29,9 +35,15 @@ object  PreferenceHelper {
             return PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_ECASH_ID, null)
         }
         set(value) {
-            PreferenceManager.getDefaultSharedPreferences(context).edit()
-                    .putString(PREF_ECASH_ID, value)
-                    .commit()
+            if (value == null) {
+                PreferenceManager.getDefaultSharedPreferences(context).edit()
+                        .remove(PREF_ECASH_ID)
+                        .commit()
+            } else {
+                PreferenceManager.getDefaultSharedPreferences(context).edit()
+                        .putString(PREF_ECASH_ID, value)
+                        .commit()
+            }
         }
 
     var ecashPin: String?
@@ -39,8 +51,14 @@ object  PreferenceHelper {
             return PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_ECASH_PIN, null)
         }
         set(value) {
-            PreferenceManager.getDefaultSharedPreferences(context).edit()
-                    .putString(PREF_ECASH_PIN, value)
-                    .commit()
+            if (value == null) {
+                PreferenceManager.getDefaultSharedPreferences(context).edit()
+                        .remove(PREF_ECASH_PIN)
+                        .commit()
+            } else {
+                PreferenceManager.getDefaultSharedPreferences(context).edit()
+                        .putString(PREF_ECASH_PIN, value)
+                        .commit()
+            }
         }
 }

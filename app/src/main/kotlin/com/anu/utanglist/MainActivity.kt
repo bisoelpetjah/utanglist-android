@@ -17,7 +17,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.anu.utanglist.fragments.BorrowFragment
-import com.anu.utanglist.fragments.HistoryFragment
 import com.anu.utanglist.fragments.LendFragment
 import com.anu.utanglist.models.User
 import com.anu.utanglist.utils.WebServiceHelper
@@ -85,6 +84,15 @@ class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelected
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if (WebServiceHelper.accessToken == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+    }
+
     override fun onNavigationItemSelected(item: MenuItem?): Boolean {
         drawerLayout?.closeDrawers()
 
@@ -99,10 +107,9 @@ class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 assignFragment(LendFragment())
                 return true
             }
-            R.id.drawer_history -> {
-                supportActionBar?.setTitle(R.string.drawer_history)
-                assignFragment(HistoryFragment())
-                return true
+            R.id.drawer_settings-> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+                return false
             }
             else -> return false
         }

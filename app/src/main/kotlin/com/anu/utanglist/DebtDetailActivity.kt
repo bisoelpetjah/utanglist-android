@@ -25,6 +25,7 @@ class DebtDetailActivity: AppCompatActivity() {
 
     companion object {
         final val EXTRA_DEBT_ID = "EXTRA_DEBT_ID"
+        final val EXTRA_DEBT_TYPE = "EXTRA_DEBT_TYPE"
     }
 
     private var toolbar: Toolbar? = null
@@ -40,6 +41,7 @@ class DebtDetailActivity: AppCompatActivity() {
     private var emptyPayment: TextView? = null
 
     private var debt: Debt? = null
+    private var debtType: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,13 +67,15 @@ class DebtDetailActivity: AppCompatActivity() {
         }
 
         val debtId = intent.getStringExtra(EXTRA_DEBT_ID)
+        debtType = intent.getStringExtra(EXTRA_DEBT_TYPE)
+
         performGetDebtById(debtId)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.detail, menu)
 
-        if (debt?.type == Debt.Type.BORROW) {
+        if (debtType == Debt.TYPE_BORROW) {
             menu?.findItem(R.id.pay)?.isVisible = true
         } else {
             menu?.findItem(R.id.pay)?.isVisible = false
@@ -116,7 +120,7 @@ class DebtDetailActivity: AppCompatActivity() {
                 })
         textViewAmount?.text = debt?.currentAmount.toString()
         textViewTotalAmount?.text = debt?.totalAmount.toString()
-        if (debt?.type == Debt.Type.BORROW) {
+        if (debtType == Debt.TYPE_BORROW) {
             textViewAmount?.setTextColor(ContextCompat.getColor(this, R.color.bg_floating_action_button))
             textViewLabelName?.text = resources.getString(R.string.label_detail_borrow)
         } else {

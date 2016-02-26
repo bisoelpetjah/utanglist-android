@@ -8,10 +8,11 @@
 
     <string name="dialog_loading">Memuat..</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Batal</string>
 
-    <string name="drawer_borrow">Utang</string>
-    <string name="drawer_lend">Piutang</string>
-    <string name="drawer_history">Riwayat</string>
+    <string name="drawer_borrow">Pemberi pinjaman</string>
+    <string name="drawer_lend">Peminjam</string>
+    <string name="drawer_settings">Pengaturan</string>
 
     <string name="label_name_borrow">dari</string>
     <string name="label_name_lend">untuk</string>
@@ -24,6 +25,15 @@
     <string name="label_detail_lend">Pinjaman untuk</string>
     <string name="label_note">Catatan:</string>
     <string name="empty_payment">Belum ada pembayaran.</string>
+
+    <string name="title_settings">Pengaturan</string>
+    <string name="pref_ecash_id">pref_ecash_id</string>
+    <string name="pref_ecash_pin">pref_ecash_pin</string>
+    <string name="pref_logout">pref_logout</string>
+    <string name="settings_ecash_id">ID e-cash</string>
+    <string name="settings_ecash_pin">PIN e-cash</string>
+    <string name="settings_logout">Logout</string>
+    <string name="dialog_logout">Anda yakin akan logout?</string>
 
     <string name="title_add_debt">Tambah Utang</string>
     <string name="menu_submit">Kirim</string>
