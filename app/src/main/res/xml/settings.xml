@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:key="@string/pref_ecash_id"
+        android:title="@string/settings_ecash_id"
+        android:summary=""
+        android:inputType="phone"/>
+    <EditTextPreference
+        android:key="@string/pref_ecash_pin"
+        android:title="@string/settings_ecash_pin"
+        android:summary=""
+        android:inputType="numberPassword"/>
+    <Preference
+        android:key="@string/pref_logout"
+        android:title="@string/settings_logout"/>
+</PreferenceScreen>
