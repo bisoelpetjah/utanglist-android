@@ -23,6 +23,8 @@
     <string name="label_detail_borrow">Pinjaman dari</string>
     <string name="label_detail_lend">Pinjaman untuk</string>
     <string name="label_note">Catatan:</string>
+    <string name="button_debt_demand">Beri pinjaman</string>
+    <string name="button_debt_offer">Mohon pinjaman</string>
     <string name="empty_payment">Belum ada pembayaran.</string>
 
     <string name="title_settings">Pengaturan</string>

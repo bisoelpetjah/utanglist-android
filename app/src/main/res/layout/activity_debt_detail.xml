@@ -64,13 +64,22 @@
                 android:textColor="@android:color/primary_text_light"
                 android:maxLines="2"/>
 
+            <Button
+                android:id="@+id/debt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_below="@id/photo"
+                android:background="@color/bg_floating_action_button"
+                android:textColor="@android:color/white"/>
+
             <TextView
                 android:id="@+id/labelNote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="15dp"
-                android:layout_below="@id/photo"
+                android:layout_below="@id/debt"
                 android:text="@string/label_note"/>
 
             <TextView
