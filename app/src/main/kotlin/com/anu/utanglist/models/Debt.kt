@@ -10,6 +10,11 @@ import java.util.List
  */
 class Debt {
 
+    companion object {
+        final val TYPE_BORROW = "TYPE_BORROW"
+        final val TYPE_LEND = "TYPE_LEND"
+    }
+
     @Expose
     var id: String? = null
 
@@ -32,10 +37,4 @@ class Debt {
     @Expose
     @SerializedName("payments")
     var paymentList: List<Payment> = ArrayList<Payment>() as List<Payment>
-
-    var type: Type? = null
-
-    enum class Type {
-        BORROW, LEND
-    }
 }

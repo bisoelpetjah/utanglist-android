@@ -44,14 +44,20 @@ class DebtItemView : RelativeLayout {
                         }
                     })
             textViewAmount?.text = value?.currentAmount.toString()
-            if (value?.type == Debt.Type.BORROW) {
+            textViewName?.text = value?.user?.name
+        }
+
+    var debtType: String? = null
+        set(value) {
+            field = value
+
+            if (value == Debt.TYPE_BORROW) {
                 textViewAmount?.setTextColor(ContextCompat.getColor(context, R.color.bg_floating_action_button))
                 textViewLabelName?.text = resources.getString(R.string.label_name_borrow)
             } else {
                 textViewAmount?.setTextColor(ContextCompat.getColor(context, android.R.color.primary_text_light))
                 textViewLabelName?.text = resources.getString(R.string.label_name_lend)
             }
-            textViewName?.text = value?.user?.name
         }
 
     constructor(context: Context): super(context) {

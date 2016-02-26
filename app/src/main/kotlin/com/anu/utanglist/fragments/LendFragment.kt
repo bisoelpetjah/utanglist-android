@@ -37,6 +37,7 @@ class LendFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItemVi
         recyclerViewUtang = view?.findViewById(R.id.debt) as SuperRecyclerView
         emptyDebt = view?.findViewById(R.id.emptyDebt) as TextView
 
+        debtAdapter.debtType = Debt.TYPE_LEND
         debtAdapter.onItemClickListener = this
         recyclerViewUtang?.adapter = debtAdapter
         recyclerViewUtang?.setLayoutManager(LinearLayoutManager(context))
@@ -60,6 +61,7 @@ class LendFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItemVi
     override fun onItemClick(debt: Debt?) {
         val intent = Intent(context, DebtDetailActivity::class.java)
         intent.putExtra(DebtDetailActivity.EXTRA_DEBT_ID, debt?.id)
+        intent.putExtra(DebtDetailActivity.EXTRA_DEBT_TYPE, Debt.TYPE_LEND)
         startActivity(intent)
     }
 
