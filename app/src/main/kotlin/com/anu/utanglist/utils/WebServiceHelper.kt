@@ -69,25 +69,25 @@ object WebServiceHelper: Interceptor {
         @GET("user/autocomplete")
         fun getUserSuggestion(@Query("full_name") name: String): Call<List<User>>
 
-        @GET("debtoffer")
-        fun getDebtOfferList(): Call<List<Debt>>
-
-        @GET("debtdemand")
+        @GET("debtdemand/feed")
         fun getDebtDemandList(): Call<List<Debt>>
 
-        @GET("debtoffer/{id}")
-        fun getDebtOfferById(@Path("id") debtId: String): Call<Debt>
+        @GET("debtoffer/feed")
+        fun getDebtOfferList(): Call<List<Debt>>
 
         @GET("debdemandt/{id}")
         fun getDebtDemandById(@Path("id") debtId: String): Call<Debt>
 
-        @FormUrlEncoded
-        @POST("debtoffer")
-        fun addDebtOffer(@Field("amount") amount: Long, @Field("notes") note: String): Call<Debt>
+        @GET("debtoffer/{id}")
+        fun getDebtOfferById(@Path("id") debtId: String): Call<Debt>
 
         @FormUrlEncoded
         @POST("debtdemand")
         fun addDebtDemand(@Field("amount") amount: Long, @Field("notes") note: String): Call<Debt>
+
+        @FormUrlEncoded
+        @POST("debtoffer")
+        fun addDebtOffer(@Field("amount") amount: Long, @Field("notes") note: String): Call<Debt>
 
         @FormUrlEncoded
         @POST("payment")

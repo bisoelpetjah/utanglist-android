@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/drawer_borrow"
-            android:icon="@drawable/ic_borrow"
-            android:title="@string/drawer_borrow"/>
+            android:id="@+id/drawer_demand"
+            android:icon="@drawable/ic_demand"
+            android:title="@string/drawer_demand"/>
         <item
-            android:id="@+id/drawer_lend"
-            android:icon="@drawable/ic_lend"
-            android:title="@string/drawer_lend"/>
+            android:id="@+id/drawer_offer"
+            android:icon="@drawable/ic_offer"
+            android:title="@string/drawer_offer"/>
         <item
             android:id="@+id/drawer_settings"
             android:icon="@drawable/ic_settings"

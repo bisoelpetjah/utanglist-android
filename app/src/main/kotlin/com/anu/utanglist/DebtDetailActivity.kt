@@ -69,13 +69,17 @@ class DebtDetailActivity: AppCompatActivity() {
         val debtId = intent.getStringExtra(EXTRA_DEBT_ID)
         debtType = intent.getStringExtra(EXTRA_DEBT_TYPE)
 
-        performGetDebtById(debtId)
+        if (debtType == Debt.TYPE_DEMAND) {
+            performGetDebtDemandById(debtId)
+        } else {
+            performGetDebtOfferById(debtId)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.detail, menu)
 
-        if (debtType == Debt.TYPE_BORROW) {
+        if (debtType == Debt.TYPE_DEMAND) {
             menu?.findItem(R.id.pay)?.isVisible = true
         } else {
             menu?.findItem(R.id.pay)?.isVisible = false
@@ -84,11 +88,32 @@ class DebtDetailActivity: AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun performGetDebtById(debtId: String) {
+    private fun performGetDebtDemandById(debtId: String) {
         progressBarLoading?.visibility = View.VISIBLE
         layoutContainer?.visibility = View.GONE
 
-        WebServiceHelper.service!!.getDebtById(debtId).enqueue(object: Callback<Debt> {
+        WebServiceHelper.service!!.getDebtDemandById(debtId).enqueue(object: Callback<Debt> {
+            override fun onResponse(call: Call<Debt>?, response: Response<Debt>?) {
+                progressBarLoading?.visibility = View.GONE
+                layoutContainer?.visibility = View.VISIBLE
+
+                if (response?.isSuccess!!) setCurrentDebt(response?.body())
+            }
+
+            override fun onFailure(call: Call<Debt>?, t: Throwable?) {
+                progressBarLoading?.visibility = View.GONE
+                layoutContainer?.visibility = View.GONE
+
+                Toast.makeText(this@DebtDetailActivity, R.string.error_connection, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun performGetDebtOfferById(debtId: String) {
+        progressBarLoading?.visibility = View.VISIBLE
+        layoutContainer?.visibility = View.GONE
+
+        WebServiceHelper.service!!.getDebtOfferById(debtId).enqueue(object: Callback<Debt> {
             override fun onResponse(call: Call<Debt>?, response: Response<Debt>?) {
                 progressBarLoading?.visibility = View.GONE
                 layoutContainer?.visibility = View.VISIBLE
@@ -118,9 +143,8 @@ class DebtDetailActivity: AppCompatActivity() {
                         imageViewPhoto?.setImageDrawable(bitmapDrawable)
                     }
                 })
-        textViewAmount?.text = debt?.currentAmount.toString()
         textViewTotalAmount?.text = debt?.totalAmount.toString()
-        if (debtType == Debt.TYPE_BORROW) {
+        if (debtType == Debt.TYPE_DEMAND) {
             textViewAmount?.setTextColor(ContextCompat.getColor(this, R.color.bg_floating_action_button))
             textViewLabelName?.text = resources.getString(R.string.label_detail_borrow)
         } else {

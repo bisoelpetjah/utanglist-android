@@ -11,8 +11,8 @@ import java.util.List
 class Debt {
 
     companion object {
-        final val TYPE_BORROW = "TYPE_BORROW"
-        final val TYPE_LEND = "TYPE_LEND"
+        final val TYPE_DEMAND = "TYPE_DEMAND"
+        final val TYPE_OFFER = "TYPE_OFFER"
     }
 
     @Expose

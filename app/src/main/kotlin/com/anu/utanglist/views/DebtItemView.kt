@@ -43,7 +43,6 @@ class DebtItemView : RelativeLayout {
                             imageViewPhoto?.setImageDrawable(bitmapDrawable)
                         }
                     })
-            textViewAmount?.text = value?.currentAmount.toString()
             textViewName?.text = value?.user?.name
         }
 
@@ -51,7 +50,7 @@ class DebtItemView : RelativeLayout {
         set(value) {
             field = value
 
-            if (value == Debt.TYPE_BORROW) {
+            if (value == Debt.TYPE_DEMAND) {
                 textViewAmount?.setTextColor(ContextCompat.getColor(context, R.color.bg_floating_action_button))
                 textViewLabelName?.text = resources.getString(R.string.label_name_borrow)
             } else {

@@ -24,7 +24,7 @@ import retrofit2.Response
 /**
  * Created by irvan on 2/20/16.
  */
-class LendFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItemView.OnItemClickListener {
+class OfferFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItemView.OnItemClickListener {
 
     private var recyclerViewUtang: SuperRecyclerView? = null
     private var emptyDebt: TextView? = null
@@ -37,7 +37,7 @@ class LendFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItemVi
         recyclerViewUtang = view?.findViewById(R.id.debt) as SuperRecyclerView
         emptyDebt = view?.findViewById(R.id.emptyDebt) as TextView
 
-        debtAdapter.debtType = Debt.TYPE_LEND
+        debtAdapter.debtType = Debt.TYPE_DEMAND
         debtAdapter.onItemClickListener = this
         recyclerViewUtang?.adapter = debtAdapter
         recyclerViewUtang?.setLayoutManager(LinearLayoutManager(context))
@@ -49,24 +49,24 @@ class LendFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItemVi
     override fun onStart() {
         super.onStart()
 
-        performGetMoneyLentList()
+        performGetMoneyBorrowedList()
     }
 
     override fun onRefresh() {
         recyclerViewUtang?.setRefreshing(true)
 
-        performGetMoneyLentList()
+        performGetMoneyBorrowedList()
     }
 
     override fun onItemClick(debt: Debt?) {
         val intent = Intent(context, DebtDetailActivity::class.java)
         intent.putExtra(DebtDetailActivity.EXTRA_DEBT_ID, debt?.id)
-        intent.putExtra(DebtDetailActivity.EXTRA_DEBT_TYPE, Debt.TYPE_LEND)
+        intent.putExtra(DebtDetailActivity.EXTRA_DEBT_TYPE, Debt.TYPE_DEMAND)
         startActivity(intent)
     }
 
-    private fun performGetMoneyLentList() {
-        WebServiceHelper.service!!.getDebtDemandList().enqueue(object: Callback<List<Debt>> {
+    private fun performGetMoneyBorrowedList() {
+        WebServiceHelper.service!!.getDebtOfferList().enqueue(object: Callback<List<Debt>> {
             override fun onResponse(call: Call<List<Debt>>?, response: Response<List<Debt>>?) {
                 recyclerViewUtang?.setRefreshing(false)
 

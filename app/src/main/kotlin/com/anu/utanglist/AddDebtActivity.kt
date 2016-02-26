@@ -111,8 +111,8 @@ class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener, 
                         .show()
             } else {
                 when (selectedMode) {
-                    0 -> performAddMoneyBorrowed(selectedUser!!.facebookId!!, editTextAmount?.text.toString().toLong(), editTextNote?.text.toString())
-                    1 -> performAddMoneyLent(selectedUser!!.facebookId!!, editTextAmount?.text.toString().toLong(), editTextNote?.text.toString())
+                    0 -> performAddDebtOffer(editTextAmount?.text.toString().toLong(), editTextNote?.text.toString())
+                    1 -> performAddDebtDemand(editTextAmount?.text.toString().toLong(), editTextNote?.text.toString())
                 }
             }
             return true
@@ -182,10 +182,10 @@ class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener, 
         })
     }
 
-    private fun performAddMoneyLent(borrowerId: String, amount: Long, note: String) {
+    private fun performAddDebtDemand(amount: Long, note: String) {
         var progress = ProgressDialog.show(this, null, resources.getString(R.string.dialog_loading))
 
-        WebServiceHelper.service!!.addMoneyLent(borrowerId, amount, note).enqueue(object: Callback<Debt> {
+        WebServiceHelper.service!!.addDebtDemand(amount, note).enqueue(object: Callback<Debt> {
             override fun onResponse(call: Call<Debt>?, response: Response<Debt>?) {
                 progress.cancel()
                 finish()
@@ -198,10 +198,10 @@ class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener, 
         })
     }
 
-    private fun performAddMoneyBorrowed(lenderId: String, amount: Long, note: String) {
+    private fun performAddDebtOffer(amount: Long, note: String) {
         var progress = ProgressDialog.show(this, null, resources.getString(R.string.dialog_loading))
 
-        WebServiceHelper.service!!.addMoneyBorrowed(lenderId, amount, note).enqueue(object: Callback<Debt> {
+        WebServiceHelper.service!!.addDebtOffer(amount, note).enqueue(object: Callback<Debt> {
             override fun onResponse(call: Call<Debt>?, response: Response<Debt>?) {
                 progress.cancel()
                 finish()

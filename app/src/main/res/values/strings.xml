@@ -10,8 +10,8 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Batal</string>
 
-    <string name="drawer_borrow">Pemberi pinjaman</string>
-    <string name="drawer_lend">Peminjam</string>
+    <string name="drawer_demand">Peminjam</string>
+    <string name="drawer_offer">Pemberi pinjaman</string>
     <string name="drawer_settings">Pengaturan</string>
 
     <string name="label_name_borrow">dari</string>

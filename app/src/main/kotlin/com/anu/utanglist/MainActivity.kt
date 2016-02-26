@@ -16,8 +16,8 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.anu.utanglist.fragments.BorrowFragment
-import com.anu.utanglist.fragments.LendFragment
+import com.anu.utanglist.fragments.OfferFragment
+import com.anu.utanglist.fragments.DemandFragment
 import com.anu.utanglist.models.User
 import com.anu.utanglist.utils.WebServiceHelper
 import com.bumptech.glide.Glide
@@ -59,14 +59,14 @@ class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelected
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
             drawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0)
-            drawerLayout?.setDrawerListener(drawerToggle)
+            drawerLayout?.addDrawerListener(drawerToggle as DrawerLayout.DrawerListener)
             drawerToggle?.syncState()
 
             navigationView?.setNavigationItemSelectedListener(this)
 
-            navigationView?.setCheckedItem(R.id.drawer_borrow)
-            supportActionBar?.setTitle(R.string.drawer_borrow)
-            assignFragment(BorrowFragment())
+            navigationView?.setCheckedItem(R.id.drawer_demand)
+            supportActionBar?.setTitle(R.string.drawer_demand)
+            assignFragment(OfferFragment())
 
             WebServiceHelper.service!!.getCurrentUser().enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>?, response: Response<User>?) {
@@ -97,14 +97,14 @@ class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelected
         drawerLayout?.closeDrawers()
 
         when (item?.itemId) {
-            R.id.drawer_borrow -> {
-                supportActionBar?.setTitle(R.string.drawer_borrow)
-                assignFragment(BorrowFragment())
+            R.id.drawer_demand -> {
+                supportActionBar?.setTitle(R.string.drawer_demand)
+                assignFragment(DemandFragment())
                 return true
             }
-            R.id.drawer_lend -> {
-                supportActionBar?.setTitle(R.string.drawer_lend)
-                assignFragment(LendFragment())
+            R.id.drawer_offer -> {
+                supportActionBar?.setTitle(R.string.drawer_offer)
+                assignFragment(OfferFragment())
                 return true
             }
             R.id.drawer_settings-> {
