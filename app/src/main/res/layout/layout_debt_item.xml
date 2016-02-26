@@ -30,7 +30,6 @@
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@id/labelAmount"
             android:layout_alignBaseline="@id/labelAmount"
-            android:text="123123"
             android:textSize="28sp"
             android:textColor="@color/bg_floating_action_button"/>
 
@@ -41,7 +40,6 @@
             android:layout_marginRight="10dp"
             android:layout_below="@id/amount"
             android:layout_toRightOf="@id/photo"
-            android:layout_alignBaseline="@id/labelName"
             android:textSize="16sp"/>
 
     </RelativeLayout>

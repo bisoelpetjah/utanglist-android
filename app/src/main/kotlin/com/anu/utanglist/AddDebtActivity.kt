@@ -8,10 +8,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import com.anu.utanglist.models.Debt
 import com.anu.utanglist.utils.WebServiceHelper
 import retrofit2.Call
@@ -21,7 +19,7 @@ import retrofit2.Response
 /**
  * Created by irvan on 2/20/16.
  */
-class AddDebtActivity: AppCompatActivity() {
+class AddDebtActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private var toolbar: Toolbar? = null
     private var spinnerType: Spinner? = null
@@ -53,6 +51,7 @@ class AddDebtActivity: AppCompatActivity() {
         val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(this, R.array.debt_types, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerType?.adapter = adapter
+        spinnerType?.onItemSelectedListener = this
 
         inputLayoutAmount?.setHint(resources.getString(R.string.hint_amount))
         inputLayoutNote?.setHint(resources.getString(R.string.hint_note))
@@ -80,6 +79,12 @@ class AddDebtActivity: AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        selectedMode = position
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun performAddDebtDemand(amount: Long, note: String) {
         var progress = ProgressDialog.show(this, null, resources.getString(R.string.dialog_loading))

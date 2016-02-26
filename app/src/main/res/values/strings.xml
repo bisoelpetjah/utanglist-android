@@ -17,9 +17,9 @@
     <string name="label_rp">Rp</string>
     <string name="empty_debt">Belum ada item.</string>
 
-    <string name="title_debt_detail">Detail Utang</string>
+    <string name="title_debt_detail_demand">Info Permohonan</string>
+    <string name="title_debt_detail_offer">Info Penawaran</string>
     <string name="menu_pay">Bayar</string>
-    <string name="divider_amount">/</string>
     <string name="label_detail_borrow">Pinjaman dari</string>
     <string name="label_detail_lend">Pinjaman untuk</string>
     <string name="label_note">Catatan:</string>

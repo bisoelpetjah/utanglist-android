@@ -7,7 +7,6 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.view.Menu
 import android.view.View
 import android.widget.*
 import com.anu.utanglist.models.Debt
@@ -33,14 +32,9 @@ class DebtDetailActivity: AppCompatActivity() {
     private var layoutContainer: ScrollView? = null
     private var imageViewPhoto: ImageView? = null
     private var textViewAmount: TextView? = null
-    private var textViewTotalAmount: TextView? = null
-    private var textViewLabelName: TextView? = null
     private var textViewName: TextView? = null
     private var textViewNote: TextView? = null
-    private var layoutPayments: LinearLayout? = null
-    private var emptyPayment: TextView? = null
 
-    private var debt: Debt? = null
     private var debtType: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,15 +46,10 @@ class DebtDetailActivity: AppCompatActivity() {
         layoutContainer = findViewById(R.id.container) as ScrollView
         imageViewPhoto = findViewById(R.id.photo) as ImageView
         textViewAmount = findViewById(R.id.amount) as TextView
-        textViewTotalAmount = findViewById(R.id.totalAmount) as TextView
-        textViewLabelName = findViewById(R.id.labelName) as TextView
         textViewName = findViewById(R.id.name) as TextView
         textViewNote = findViewById(R.id.note) as TextView
-        layoutPayments = findViewById(R.id.payments) as LinearLayout
-        emptyPayment = findViewById(R.id.emptyPayment) as TextView
 
         setSupportActionBar(toolbar)
-        supportActionBar?.setTitle(R.string.title_debt_detail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar?.setNavigationOnClickListener {
             finish()
@@ -70,22 +59,12 @@ class DebtDetailActivity: AppCompatActivity() {
         debtType = intent.getStringExtra(EXTRA_DEBT_TYPE)
 
         if (debtType == Debt.TYPE_DEMAND) {
+            supportActionBar?.setTitle(R.string.title_debt_detail_demand)
             performGetDebtDemandById(debtId)
         } else {
+            supportActionBar?.setTitle(R.string.title_debt_detail_offer)
             performGetDebtOfferById(debtId)
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.detail, menu)
-
-        if (debtType == Debt.TYPE_DEMAND) {
-            menu?.findItem(R.id.pay)?.isVisible = true
-        } else {
-            menu?.findItem(R.id.pay)?.isVisible = false
-        }
-
-        return super.onCreateOptionsMenu(menu)
     }
 
     private fun performGetDebtDemandById(debtId: String) {
@@ -143,21 +122,8 @@ class DebtDetailActivity: AppCompatActivity() {
                         imageViewPhoto?.setImageDrawable(bitmapDrawable)
                     }
                 })
-        textViewTotalAmount?.text = debt?.amount.toString()
-        if (debtType == Debt.TYPE_DEMAND) {
-            textViewAmount?.setTextColor(ContextCompat.getColor(this, R.color.bg_floating_action_button))
-            textViewLabelName?.text = resources.getString(R.string.label_detail_borrow)
-        } else {
-            textViewAmount?.setTextColor(ContextCompat.getColor(this, android.R.color.primary_text_light))
-            textViewLabelName?.text = resources.getString(R.string.label_detail_lend)
-        }
+        textViewAmount?.text = debt?.amount.toString()
         textViewName?.text = debt?.user?.name
         textViewNote?.text = debt?.note
-
-        if (debt?.paymentList!!.isEmpty()) {
-            emptyPayment?.visibility = View.VISIBLE
-        } else {
-            emptyPayment?.visibility = View.GONE
-        }
     }
 }

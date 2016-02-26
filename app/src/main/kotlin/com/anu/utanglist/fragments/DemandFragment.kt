@@ -37,7 +37,6 @@ class DemandFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtIte
         recyclerViewUtang = view?.findViewById(R.id.debt) as SuperRecyclerView
         emptyDebt = view?.findViewById(R.id.emptyDebt) as TextView
 
-        debtAdapter.debtType = Debt.TYPE_OFFER
         debtAdapter.onItemClickListener = this
         recyclerViewUtang?.adapter = debtAdapter
         recyclerViewUtang?.setLayoutManager(LinearLayoutManager(context))
@@ -61,7 +60,7 @@ class DemandFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtIte
     override fun onItemClick(debt: Debt?) {
         val intent = Intent(context, DebtDetailActivity::class.java)
         intent.putExtra(DebtDetailActivity.EXTRA_DEBT_ID, debt?.id)
-        intent.putExtra(DebtDetailActivity.EXTRA_DEBT_TYPE, Debt.TYPE_OFFER)
+        intent.putExtra(DebtDetailActivity.EXTRA_DEBT_TYPE, Debt.TYPE_DEMAND)
         startActivity(intent)
     }
 

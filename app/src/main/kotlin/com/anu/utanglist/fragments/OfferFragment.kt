@@ -37,7 +37,6 @@ class OfferFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItem
         recyclerViewUtang = view?.findViewById(R.id.debt) as SuperRecyclerView
         emptyDebt = view?.findViewById(R.id.emptyDebt) as TextView
 
-        debtAdapter.debtType = Debt.TYPE_DEMAND
         debtAdapter.onItemClickListener = this
         recyclerViewUtang?.adapter = debtAdapter
         recyclerViewUtang?.setLayoutManager(LinearLayoutManager(context))
@@ -49,23 +48,23 @@ class OfferFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItem
     override fun onStart() {
         super.onStart()
 
-        performGetMoneyBorrowedList()
+        performGetDebtOfferList()
     }
 
     override fun onRefresh() {
         recyclerViewUtang?.setRefreshing(true)
 
-        performGetMoneyBorrowedList()
+        performGetDebtOfferList()
     }
 
     override fun onItemClick(debt: Debt?) {
         val intent = Intent(context, DebtDetailActivity::class.java)
         intent.putExtra(DebtDetailActivity.EXTRA_DEBT_ID, debt?.id)
-        intent.putExtra(DebtDetailActivity.EXTRA_DEBT_TYPE, Debt.TYPE_DEMAND)
+        intent.putExtra(DebtDetailActivity.EXTRA_DEBT_TYPE, Debt.TYPE_OFFER)
         startActivity(intent)
     }
 
-    private fun performGetMoneyBorrowedList() {
+    private fun performGetDebtOfferList() {
         WebServiceHelper.service!!.getDebtOfferList().enqueue(object: Callback<List<Debt>> {
             override fun onResponse(call: Call<List<Debt>>?, response: Response<List<Debt>>?) {
                 recyclerViewUtang?.setRefreshing(false)

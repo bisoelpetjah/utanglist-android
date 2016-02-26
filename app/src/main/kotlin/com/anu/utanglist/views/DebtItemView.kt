@@ -2,7 +2,6 @@ package com.anu.utanglist.views
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory
 import android.util.AttributeSet
@@ -45,8 +44,6 @@ class DebtItemView : RelativeLayout {
             textViewAmount?.text = value?.amount.toString()
             textViewName?.text = value?.user?.name
         }
-
-    var debtType: String? = null
 
     constructor(context: Context): super(context) {
         init(context)

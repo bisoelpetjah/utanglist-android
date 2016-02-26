@@ -75,7 +75,7 @@ object WebServiceHelper: Interceptor {
         @GET("debtoffer/feed")
         fun getDebtOfferList(): Call<List<Debt>>
 
-        @GET("debdemandt/{id}")
+        @GET("debtdemand/{id}")
         fun getDebtDemandById(@Path("id") debtId: String): Call<Debt>
 
         @GET("debtoffer/{id}")
