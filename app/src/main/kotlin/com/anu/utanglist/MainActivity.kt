@@ -66,7 +66,7 @@ class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
             navigationView?.setCheckedItem(R.id.drawer_demand)
             supportActionBar?.setTitle(R.string.drawer_demand)
-            assignFragment(OfferFragment())
+            assignFragment(DemandFragment())
 
             WebServiceHelper.service!!.getCurrentUser().enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>?, response: Response<User>?) {

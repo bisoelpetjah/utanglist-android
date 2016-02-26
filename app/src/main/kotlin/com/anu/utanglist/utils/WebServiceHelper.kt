@@ -83,11 +83,11 @@ object WebServiceHelper: Interceptor {
 
         @FormUrlEncoded
         @POST("debtdemand")
-        fun addDebtDemand(@Field("amount") amount: Long, @Field("notes") note: String): Call<Debt>
+        fun addDebtDemand(@Field("total_debt") amount: Long, @Field("notes") note: String): Call<Debt>
 
         @FormUrlEncoded
         @POST("debtoffer")
-        fun addDebtOffer(@Field("amount") amount: Long, @Field("notes") note: String): Call<Debt>
+        fun addDebtOffer(@Field("total_debt") amount: Long, @Field("notes") note: String): Call<Debt>
 
         @FormUrlEncoded
         @POST("payment")

@@ -35,16 +35,13 @@
     <string name="settings_logout">Logout</string>
     <string name="dialog_logout">Anda yakin akan logout?</string>
 
-    <string name="title_add_debt">Tambah Utang</string>
+    <string name="title_add_debt">Tambah Tawaran</string>
     <string name="menu_submit">Kirim</string>
     <string-array name="debt_types">
-        <item>Utang</item>
-        <item>Piutang</item>
+        <item>Mohon pinjaman</item>
+        <item>Beri pinjaman</item>
     </string-array>
-    <string name="hint_lender">Pemberi utang</string>
-    <string name="hint_borrower">Pengutang</string>
     <string name="hint_amount">Jumlah</string>
     <string name="hint_note">Catatan</string>
     <string name="error_submit">Silakan lengkapi semua isian.</string>
-    <string name="empty_autocomplete">User tidak ditemukan.</string>
 </resources>
