@@ -7,14 +7,16 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.Menu
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import com.activeandroid.query.Select
+import android.widget.*
 import com.anu.utanglist.models.Debt
+import com.anu.utanglist.utils.WebServiceHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.BitmapImageViewTarget
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 /**
  * Created by irvan on 2/23/16.
@@ -26,6 +28,8 @@ class DebtDetailActivity: AppCompatActivity() {
     }
 
     private var toolbar: Toolbar? = null
+    private var progressBarLoading: ProgressBar? = null
+    private var layoutContainer: ScrollView? = null
     private var imageViewPhoto: ImageView? = null
     private var textViewAmount: TextView? = null
     private var textViewTotalAmount: TextView? = null
@@ -42,6 +46,8 @@ class DebtDetailActivity: AppCompatActivity() {
         setContentView(R.layout.activity_debt_detail)
 
         toolbar = findViewById(R.id.toolbar) as Toolbar
+        progressBarLoading = findViewById(R.id.loading) as ProgressBar
+        layoutContainer = findViewById(R.id.container) as ScrollView
         imageViewPhoto = findViewById(R.id.photo) as ImageView
         textViewAmount = findViewById(R.id.amount) as TextView
         textViewTotalAmount = findViewById(R.id.totalAmount) as TextView
@@ -59,8 +65,43 @@ class DebtDetailActivity: AppCompatActivity() {
         }
 
         val debtId = intent.getStringExtra(EXTRA_DEBT_ID)
-        debt = Select().from(Debt::class.java).where("id = ?", debtId).executeSingle()
+        performGetDebtById(debtId)
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.detail, menu)
+
+        if (debt?.type == Debt.Type.BORROW) {
+            menu?.findItem(R.id.pay)?.isVisible = true
+        } else {
+            menu?.findItem(R.id.pay)?.isVisible = false
+        }
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun performGetDebtById(debtId: String) {
+        progressBarLoading?.visibility = View.VISIBLE
+        layoutContainer?.visibility = View.GONE
+
+        WebServiceHelper.service!!.getDebtById(debtId).enqueue(object: Callback<Debt> {
+            override fun onResponse(call: Call<Debt>?, response: Response<Debt>?) {
+                progressBarLoading?.visibility = View.GONE
+                layoutContainer?.visibility = View.VISIBLE
+
+                if (response?.isSuccess!!) setCurrentDebt(response?.body())
+            }
+
+            override fun onFailure(call: Call<Debt>?, t: Throwable?) {
+                progressBarLoading?.visibility = View.GONE
+                layoutContainer?.visibility = View.GONE
+
+                Toast.makeText(this@DebtDetailActivity, R.string.error_connection, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun setCurrentDebt(debt: Debt?) {
         Glide.with(this)
                 .load(debt?.user?.photoUrl)
                 .asBitmap()

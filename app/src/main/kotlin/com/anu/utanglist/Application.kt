@@ -1,7 +1,6 @@
 package com.anu.utanglist
 
-import com.activeandroid.ActiveAndroid
-import com.activeandroid.query.Select
+import android.preference.PreferenceManager
 import com.anu.utanglist.models.Token
 import com.anu.utanglist.utils.WebServiceHelper
 import com.facebook.FacebookSdk
@@ -16,11 +15,9 @@ class Application: android.app.Application() {
 
         WebServiceHelper.init()
 
-        ActiveAndroid.initialize(this)
-
         FacebookSdk.sdkInitialize(this)
 
-        val token: Token? = Select().from(Token::class.java).executeSingle()
-        WebServiceHelper.accessToken = token?.accessToken
+        val accessToken = PreferenceManager.getDefaultSharedPreferences(this).getString(Token.PREF_ACCESS_TOKEN, null)
+        WebServiceHelper.accessToken = accessToken
     }
 }

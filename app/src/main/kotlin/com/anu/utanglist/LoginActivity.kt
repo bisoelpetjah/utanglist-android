@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
+import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
@@ -50,9 +51,12 @@ class LoginActivity: AppCompatActivity(), FacebookCallback<LoginResult> {
                     progressBarLogin?.visibility = View.GONE
                 } else {
                     val token = response?.body()
-                    token?.save()
 
                     WebServiceHelper.accessToken = token?.accessToken
+
+                    PreferenceManager.getDefaultSharedPreferences(this@LoginActivity).edit()
+                            .putString(Token.PREF_ACCESS_TOKEN, token?.accessToken)
+                            .commit()
 
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()

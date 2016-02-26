@@ -16,7 +16,6 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.activeandroid.query.Select
 import com.anu.utanglist.fragments.BorrowFragment
 import com.anu.utanglist.fragments.HistoryFragment
 import com.anu.utanglist.fragments.LendFragment
@@ -70,18 +69,9 @@ class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelected
             supportActionBar?.setTitle(R.string.drawer_borrow)
             assignFragment(BorrowFragment())
 
-            val user: User? = Select().from(User::class.java).where("isCurrentUser = ?", true).executeSingle()
-            setCurrentUser(user)
-
             WebServiceHelper.service!!.getCurrentUser().enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>?, response: Response<User>?) {
-                    if (response?.isSuccess!!) {
-                        val currentUser = response?.body()
-                        currentUser?.isCurrentUser = true
-                        currentUser?.save()
-
-                        setCurrentUser(currentUser)
-                    }
+                    if (response?.isSuccess!!) setCurrentUser(response?.body())
                 }
 
                 override fun onFailure(call: Call<User>?, t: Throwable?) {

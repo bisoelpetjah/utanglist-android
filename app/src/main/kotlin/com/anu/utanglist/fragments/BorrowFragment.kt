@@ -10,8 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import com.activeandroid.ActiveAndroid
-import com.activeandroid.query.Select
 import com.anu.utanglist.DebtDetailActivity
 import com.anu.utanglist.R
 import com.anu.utanglist.adapters.DebtAdapter
@@ -70,26 +68,11 @@ class BorrowFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItem
             override fun onResponse(call: Call<List<Debt>>?, response: Response<List<Debt>>?) {
                 recyclerViewUtang?.setRefreshing(false)
 
-                showData(response?.body())
-
-                ActiveAndroid.beginTransaction()
-                try {
-                    response?.body()?.forEach {
-                        it.type = Debt.Type.BORROW
-                        it.user?.save()
-                        it.save()
-                    }
-                    ActiveAndroid.setTransactionSuccessful()
-                } finally {
-                    ActiveAndroid.endTransaction()
-                }
+                if (response?.isSuccess!!) showData(response?.body())
             }
 
             override fun onFailure(call: Call<List<Debt>>?, t: Throwable?) {
                 recyclerViewUtang?.setRefreshing(false)
-
-                val debtList = Select().from(Debt::class.java).where("type = ?", Debt.Type.BORROW).execute<Debt>()
-                showData(debtList)
 
                 Toast.makeText(activity, R.string.error_connection, Toast.LENGTH_SHORT).show()
             }

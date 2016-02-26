@@ -18,6 +18,7 @@
     <string name="empty_debt">Belum ada item.</string>
 
     <string name="title_debt_detail">Detail Utang</string>
+    <string name="menu_pay">Bayar</string>
     <string name="divider_amount">/</string>
     <string name="label_detail_borrow">Pinjaman dari</string>
     <string name="label_detail_lend">Pinjaman untuk</string>
@@ -25,6 +26,7 @@
     <string name="empty_payment">Belum ada pembayaran.</string>
 
     <string name="title_add_debt">Tambah Utang</string>
+    <string name="menu_submit">Kirim</string>
     <string-array name="debt_types">
         <item>Utang</item>
         <item>Piutang</item>
@@ -33,7 +35,6 @@
     <string name="hint_borrower">Pengutang</string>
     <string name="hint_amount">Jumlah</string>
     <string name="hint_note">Catatan</string>
-    <string name="menu_submit">Kirim</string>
     <string name="error_submit">Silakan lengkapi semua isian.</string>
     <string name="empty_autocomplete">User tidak ditemukan.</string>
 </resources>
