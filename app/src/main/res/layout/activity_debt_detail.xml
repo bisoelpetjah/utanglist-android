@@ -19,7 +19,8 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_below="@id/toolbar"
+        android:visibility="visible">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -39,14 +40,14 @@
                         android:id="@+id/photo"
                         android:layout_width="96dp"
                         android:layout_height="96dp"
-                        android:layout_margin="10dp"
+                        android:layout_margin="15dp"
                         android:src="@drawable/ic_profile_placeholder"/>
 
                     <TextView
                         android:id="@+id/amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="15dp"
                         android:layout_toRightOf="@id/photo"
                         android:textSize="32sp"/>
 
@@ -63,7 +64,7 @@
                         android:id="@+id/totalAmount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="15dp"
                         android:layout_toRightOf="@id/amountDivider"
                         android:layout_alignBaseline="@id/amount"
                         android:textSize="24sp"
@@ -83,6 +84,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/labelName"
+                        android:layout_marginRight="15dp"
                         android:layout_toRightOf="@id/photo"
                         android:textSize="20sp"
                         android:textColor="@android:color/primary_text_light"
@@ -93,7 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="15dp"
                         android:layout_below="@id/photo"
                         android:text="@string/label_note"/>
 
@@ -101,9 +103,9 @@
                         android:id="@+id/note"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="15dp"
                         android:layout_below="@id/labelNote"
                         android:textSize="20dp"
                         android:textColor="@android:color/primary_text_light"/>
