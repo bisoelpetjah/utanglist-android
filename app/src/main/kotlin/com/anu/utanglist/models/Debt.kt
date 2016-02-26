@@ -23,12 +23,12 @@ class Debt {
     var user: User? = null
 
     @Expose
-    @SerializedName("total_debt")
-    var totalAmount: Long = 0
+    @SerializedName("*")
+    var users: List<User> = ArrayList<User>() as List<User>
 
     @Expose
-    @SerializedName("current_debt")
-    var currentAmount: Long = 0
+    @SerializedName("total_debt")
+    var totalAmount: Long = 0
 
     @Expose
     @SerializedName("notes")

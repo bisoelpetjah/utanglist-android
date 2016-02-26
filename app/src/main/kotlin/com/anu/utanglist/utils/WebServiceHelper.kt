@@ -69,22 +69,25 @@ object WebServiceHelper: Interceptor {
         @GET("user/autocomplete")
         fun getUserSuggestion(@Query("full_name") name: String): Call<List<User>>
 
-        @GET("debt/borrow")
-        fun getMoneyBorrowedList(): Call<List<Debt>>
+        @GET("debtoffer")
+        fun getDebtOfferList(): Call<List<Debt>>
 
-        @GET("debt/lend")
-        fun getMoneyLentList(): Call<List<Debt>>
+        @GET("debtdemand")
+        fun getDebtDemandList(): Call<List<Debt>>
 
-        @GET("debt/{id}")
-        fun getDebtById(@Path("id") debtId: String): Call<Debt>
+        @GET("debtoffer/{id}")
+        fun getDebtOfferById(@Path("id") debtId: String): Call<Debt>
+
+        @GET("debdemandt/{id}")
+        fun getDebtDemandById(@Path("id") debtId: String): Call<Debt>
 
         @FormUrlEncoded
-        @POST("debt/add")
-        fun addMoneyBorrowed(@Field("lender_id") lenderId: String, @Field("amount") amount: Long, @Field("notes") note: String): Call<Debt>
+        @POST("debtoffer")
+        fun addDebtOffer(@Field("amount") amount: Long, @Field("notes") note: String): Call<Debt>
 
         @FormUrlEncoded
-        @POST("debt/add")
-        fun addMoneyLent(@Field("borrower_id") borrowerId: String, @Field("amount") amount: Long, @Field("notes") note: String): Call<Debt>
+        @POST("debtdemand")
+        fun addDebtDemand(@Field("amount") amount: Long, @Field("notes") note: String): Call<Debt>
 
         @FormUrlEncoded
         @POST("payment")

@@ -66,7 +66,7 @@ class BorrowFragment: Fragment(), SwipeRefreshLayout.OnRefreshListener, DebtItem
     }
 
     private fun performGetMoneyBorrowedList() {
-        WebServiceHelper.service!!.getMoneyBorrowedList().enqueue(object: Callback<List<Debt>> {
+        WebServiceHelper.service!!.getDebtOfferList().enqueue(object: Callback<List<Debt>> {
             override fun onResponse(call: Call<List<Debt>>?, response: Response<List<Debt>>?) {
                 recyclerViewUtang?.setRefreshing(false)
 
