@@ -14,8 +14,7 @@
     <string name="drawer_offer">Pemberi pinjaman</string>
     <string name="drawer_settings">Pengaturan</string>
 
-    <string name="label_name_borrow">dari</string>
-    <string name="label_name_lend">untuk</string>
+    <string name="label_rp">Rp</string>
     <string name="empty_debt">Belum ada item.</string>
 
     <string name="title_debt_detail">Detail Utang</string>

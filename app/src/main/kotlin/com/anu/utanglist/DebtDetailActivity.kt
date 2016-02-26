@@ -143,7 +143,7 @@ class DebtDetailActivity: AppCompatActivity() {
                         imageViewPhoto?.setImageDrawable(bitmapDrawable)
                     }
                 })
-        textViewTotalAmount?.text = debt?.totalAmount.toString()
+        textViewTotalAmount?.text = debt?.amount.toString()
         if (debtType == Debt.TYPE_DEMAND) {
             textViewAmount?.setTextColor(ContextCompat.getColor(this, R.color.bg_floating_action_button))
             textViewLabelName?.text = resources.getString(R.string.label_detail_borrow)

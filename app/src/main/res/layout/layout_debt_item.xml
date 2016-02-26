@@ -14,29 +14,33 @@
             android:src="@drawable/ic_profile_placeholder"/>
 
         <TextView
+            android:id="@+id/labelAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="2dp"
+            android:layout_toRightOf="@id/photo"
+            android:text="@string/label_rp"
+            android:textSize="22sp"/>
+
+        <TextView
             android:id="@+id/amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:layout_toRightOf="@id/photo"
-            android:textSize="28sp"/>
-
-        <TextView
-            android:id="@+id/labelName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_below="@id/amount"
-            android:layout_toRightOf="@id/photo"
-            android:textSize="12sp"/>
+            android:layout_toRightOf="@id/labelAmount"
+            android:layout_alignBaseline="@id/labelAmount"
+            android:text="123123"
+            android:textSize="28sp"
+            android:textColor="@color/bg_floating_action_button"/>
 
         <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_toRightOf="@id/labelName"
+            android:layout_below="@id/amount"
+            android:layout_toRightOf="@id/photo"
             android:layout_alignBaseline="@id/labelName"
             android:textSize="16sp"/>
 

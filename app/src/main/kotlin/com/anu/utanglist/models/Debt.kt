@@ -28,7 +28,7 @@ class Debt {
 
     @Expose
     @SerializedName("total_debt")
-    var totalAmount: Long = 0
+    var amount: Long = 0
 
     @Expose
     @SerializedName("notes")

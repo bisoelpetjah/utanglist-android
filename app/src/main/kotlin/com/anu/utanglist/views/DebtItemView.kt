@@ -22,7 +22,6 @@ class DebtItemView : RelativeLayout {
 
     private var imageViewPhoto: ImageView? = null
     private var textViewAmount: TextView? = null
-    private var textViewLabelName: TextView? = null
     private var textViewName: TextView? = null
 
     var onItemClickListener: OnItemClickListener? = null
@@ -43,21 +42,11 @@ class DebtItemView : RelativeLayout {
                             imageViewPhoto?.setImageDrawable(bitmapDrawable)
                         }
                     })
+            textViewAmount?.text = value?.amount.toString()
             textViewName?.text = value?.user?.name
         }
 
     var debtType: String? = null
-        set(value) {
-            field = value
-
-            if (value == Debt.TYPE_DEMAND) {
-                textViewAmount?.setTextColor(ContextCompat.getColor(context, R.color.bg_floating_action_button))
-                textViewLabelName?.text = resources.getString(R.string.label_name_borrow)
-            } else {
-                textViewAmount?.setTextColor(ContextCompat.getColor(context, android.R.color.primary_text_light))
-                textViewLabelName?.text = resources.getString(R.string.label_name_lend)
-            }
-        }
 
     constructor(context: Context): super(context) {
         init(context)
@@ -76,7 +65,6 @@ class DebtItemView : RelativeLayout {
 
         imageViewPhoto = findViewById(R.id.photo) as ImageView
         textViewAmount = findViewById(R.id.amount) as TextView
-        textViewLabelName = findViewById(R.id.labelName) as TextView
         textViewName = findViewById(R.id.name) as TextView
 
         setOnClickListener {
