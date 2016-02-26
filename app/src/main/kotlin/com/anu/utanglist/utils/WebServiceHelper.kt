@@ -20,7 +20,6 @@ import retrofit2.http.*
  */
 object WebServiceHelper: Interceptor {
 
-//    private final val BASE_URL = "http://192.168.0.33:1337"
     private final val BASE_URL = "http://utanglist.mybluemix.net"
     private final val DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 

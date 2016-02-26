@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
-import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
@@ -13,6 +12,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import com.anu.utanglist.models.Token
+import com.anu.utanglist.utils.PreferenceHelper
 import com.anu.utanglist.utils.WebServiceHelper
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -54,9 +54,7 @@ class LoginActivity: AppCompatActivity(), FacebookCallback<LoginResult> {
 
                     WebServiceHelper.accessToken = token?.accessToken
 
-                    PreferenceManager.getDefaultSharedPreferences(this@LoginActivity).edit()
-                            .putString(Token.PREF_ACCESS_TOKEN, token?.accessToken)
-                            .commit()
+                    PreferenceHelper.accessToken = token?.accessToken
 
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()

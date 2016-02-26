@@ -8,10 +8,6 @@ import com.google.gson.annotations.SerializedName
  */
 class Token {
 
-    companion object {
-        final val PREF_ACCESS_TOKEN = "PREF_ACCESS_TOKEN"
-    }
-
     @Expose
     @SerializedName("token")
     var accessToken: String? = null
