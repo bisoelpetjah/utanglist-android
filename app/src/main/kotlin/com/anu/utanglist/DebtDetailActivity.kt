@@ -35,6 +35,8 @@ class DebtDetailActivity: AppCompatActivity() {
     private var textViewName: TextView? = null
     private var textViewNote: TextView? = null
     private var buttonDebt: Button? = null
+    private var progressBarRequest: ProgressBar? = null
+    private var textViewLabelRequest: TextView? = null
 
     private var debtType: String? = null
 
@@ -50,6 +52,8 @@ class DebtDetailActivity: AppCompatActivity() {
         textViewName = findViewById(R.id.name) as TextView
         textViewNote = findViewById(R.id.note) as TextView
         buttonDebt = findViewById(R.id.debt) as Button
+        progressBarRequest = findViewById(R.id.request) as ProgressBar
+        textViewLabelRequest = findViewById(R.id.labelRequest) as TextView
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -68,6 +72,14 @@ class DebtDetailActivity: AppCompatActivity() {
             supportActionBar?.setTitle(R.string.title_debt_detail_offer)
             buttonDebt?.setText(R.string.button_debt_offer)
             performGetDebtOfferById(debtId)
+        }
+
+        buttonDebt?.setOnClickListener {
+            if (debtType == Debt.TYPE_DEMAND) {
+                performDebtDemandRequest(debtId)
+            } else {
+                performDebtOfferRequest(debtId)
+            }
         }
     }
 
@@ -107,6 +119,58 @@ class DebtDetailActivity: AppCompatActivity() {
             override fun onFailure(call: Call<Debt>?, t: Throwable?) {
                 progressBarLoading?.visibility = View.GONE
                 layoutContainer?.visibility = View.GONE
+
+                Toast.makeText(this@DebtDetailActivity, R.string.error_connection, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun performDebtDemandRequest(id: String) {
+        buttonDebt?.visibility = View.INVISIBLE
+        progressBarRequest?.visibility = View.VISIBLE
+
+        WebServiceHelper.service!!.debtDemandRequest(id).enqueue(object: Callback<Debt> {
+            override fun onResponse(call: Call<Debt>?, response: Response<Debt>?) {
+                progressBarRequest?.visibility = View.GONE
+
+                if (response?.isSuccess!!) {
+                    buttonDebt?.visibility = View.INVISIBLE
+                    textViewLabelRequest?.visibility = View.VISIBLE
+                    textViewLabelRequest?.setText(R.string.label_debt_request_demand)
+                } else {
+                    buttonDebt?.visibility = View.VISIBLE
+                }
+            }
+
+            override fun onFailure(call: Call<Debt>?, t: Throwable?) {
+                buttonDebt?.visibility = View.VISIBLE
+                progressBarRequest?.visibility = View.GONE
+
+                Toast.makeText(this@DebtDetailActivity, R.string.error_connection, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun performDebtOfferRequest(id: String) {
+        buttonDebt?.visibility = View.INVISIBLE
+        progressBarRequest?.visibility = View.VISIBLE
+
+        WebServiceHelper.service!!.debtOfferRequest(id).enqueue(object: Callback<Debt> {
+            override fun onResponse(call: Call<Debt>?, response: Response<Debt>?) {
+                progressBarRequest?.visibility = View.GONE
+
+                if (response?.isSuccess!!) {
+                    buttonDebt?.visibility = View.INVISIBLE
+                    textViewLabelRequest?.visibility = View.VISIBLE
+                    textViewLabelRequest?.setText(R.string.label_debt_request_offer)
+                } else {
+                    buttonDebt?.visibility = View.VISIBLE
+                }
+            }
+
+            override fun onFailure(call: Call<Debt>?, t: Throwable?) {
+                buttonDebt?.visibility = View.VISIBLE
+                progressBarRequest?.visibility = View.GONE
 
                 Toast.makeText(this@DebtDetailActivity, R.string.error_connection, Toast.LENGTH_SHORT).show()
             }

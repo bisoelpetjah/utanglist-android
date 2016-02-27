@@ -89,6 +89,20 @@ object WebServiceHelper: Interceptor {
         @POST("debtoffer")
         fun addDebtOffer(@Field("total_debt") amount: Long, @Field("notes") note: String): Call<Debt>
 
+        @PATCH("debtdemand/{id}/request")
+        fun debtDemandRequest(@Path("id") id: String): Call<Debt>
+
+        @PATCH("debtoffer/{id}/request")
+        fun debtOfferRequest(@Path("id") id: String): Call<Debt>
+
+        @FormUrlEncoded
+        @PATCH("debtdemand/{id}/accept")
+        fun debtDemandAccept(@Path("id") id: String, @Field("lender_id") lenderId: String): Call<Debt>
+
+        @FormUrlEncoded
+        @PATCH("debtoffer/{id}/accept")
+        fun debtOfferAccept(@Path("id") id: String, @Field("borrower_id") borrowerId: String): Call<Debt>
+
         @FormUrlEncoded
         @POST("payment")
         fun addPayment(@Field("debt") debtId: String, @Field("amount") amount: Long): Call<Payment>

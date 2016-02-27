@@ -25,6 +25,8 @@
     <string name="label_note">Catatan:</string>
     <string name="button_debt_demand">Beri pinjaman</string>
     <string name="button_debt_offer">Mohon pinjaman</string>
+    <string name="label_debt_request_demand">Penawaran telah diajukan.</string>
+    <string name="label_debt_request_offer">Permohonan telah diajukan.</string>
     <string name="empty_payment">Belum ada pembayaran.</string>
 
     <string name="title_settings">Pengaturan</string>
