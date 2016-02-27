@@ -75,6 +75,18 @@ object WebServiceHelper: Interceptor {
         @GET("debtoffer/feed")
         fun getDebtOfferList(): Call<List<Debt>>
 
+        @GET("debtdemand/me")
+        fun getCurrentUserDebtDemandList(): Call<List<Debt>>
+
+        @GET("debtoffer/me")
+        fun getCurrentUserDebtOfferList(): Call<List<Debt>>
+
+        @GET("debt/borrow")
+        fun getCurrentUserOngoingDebtDemandList(): Call<List<Debt>>
+
+        @GET("debt/lend")
+        fun getCurrentUserOngoingDebtOfferList(): Call<List<Debt>>
+
         @GET("debtdemand/{id}")
         fun getDebtDemandById(@Path("id") debtId: String): Call<Debt>
 

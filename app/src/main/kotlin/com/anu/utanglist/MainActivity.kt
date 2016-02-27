@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.anu.utanglist.fragments.OfferFragment
@@ -34,6 +35,7 @@ class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelected
     private var toolbar: Toolbar? = null
     private var drawerLayout: DrawerLayout? = null
     private var navigationView: NavigationView? = null
+    private var drawerHeaderLayout: RelativeLayout? = null
     private var imageViewPhoto: ImageView? = null
     private var textViewName: TextView? = null
     private var buttonAdd: FloatingActionButton? = null
@@ -51,6 +53,7 @@ class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelected
             toolbar = findViewById(R.id.toolbar) as Toolbar
             drawerLayout = findViewById(R.id.drawerLayout) as DrawerLayout
             navigationView = findViewById(R.id.navigationView) as NavigationView
+            drawerHeaderLayout = navigationView?.getHeaderView(0)?.findViewById(R.id.drawerHeader) as RelativeLayout
             imageViewPhoto = navigationView?.getHeaderView(0)?.findViewById(R.id.photo) as ImageView
             textViewName = navigationView?.getHeaderView(0)?.findViewById(R.id.name) as TextView
             buttonAdd = findViewById(R.id.add) as FloatingActionButton
@@ -77,6 +80,12 @@ class MainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelected
                     Toast.makeText(this@MainActivity, R.string.error_connection, Toast.LENGTH_SHORT).show()
                 }
             })
+
+            drawerHeaderLayout?.setOnClickListener {
+                val intent = Intent(this@MainActivity, ProfileActivity::class.java)
+                intent.putExtra(ProfileActivity.EXTRA_IS_CURRENT_USER, true)
+                startActivity(intent)
+            }
 
             buttonAdd?.setOnClickListener {
                 startActivity(Intent(this, AddDebtActivity::class.java))

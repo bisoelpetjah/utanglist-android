@@ -17,6 +17,13 @@
     <string name="label_rp">Rp</string>
     <string name="empty_debt">Belum ada item.</string>
 
+    <string-array name="profile_tab_titles">
+        <item>PINJAMAN</item>
+        <item>PEMINJAMAN</item>
+        <item>PINJAMAN BERLANGSUNG</item>
+        <item>PEMINJAMAN BERLANGSUNG</item>
+    </string-array>
+
     <string name="title_debt_detail_demand">Info Permohonan</string>
     <string name="title_debt_detail_offer">Info Penawaran</string>
     <string name="menu_pay">Bayar</string>
