@@ -13,18 +13,18 @@
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:contentScrim="@color/bg_toolbar"
-            app:expandedTitleGravity="right">
+            app:expandedTitleGravity="right|bottom">
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/bg_toolbar">
                 <ImageView
                     android:id="@+id/photo"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="64dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="56dp"
+                    android:layout_marginBottom="72dp"
                     android:src="@drawable/ic_profile_placeholder"/>
             </FrameLayout>
 
